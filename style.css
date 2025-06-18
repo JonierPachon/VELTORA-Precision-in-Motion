@@ -1,0 +1,233 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+* {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+}
+
+body,
+html {
+   height: 100%;
+   font-family: "Playfair Display", sans-serif;
+   scroll-behavior: smooth;
+}
+
+.hero-section {
+   color: white;
+   position: relative;
+   height: 100vh;
+   overflow: hidden;
+   display: flex; /* Use Flexbox */
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   text-align: center;
+}
+
+.background-img {
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+   position: absolute; /* Position the image behind the overlay */
+   top: 0;
+   left: 0;
+   z-index: 1; /* Ensure the image is behind the overlay */
+}
+
+.overlay {
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background-color: rgba(0, 0, 0, 0.6);
+   z-index: 2; /* Ensure the overlay is above the image */
+}
+
+header {
+   position: absolute;
+   width: 100%;
+   top: 0;
+   left: 0;
+   display: flex;
+   padding: 1.5rem 6rem;
+   justify-content: space-between;
+   align-items: center;
+   margin-bottom: 20px;
+   z-index: 3;
+}
+
+.cta-button {
+   padding: 1rem 2rem;
+   letter-spacing: 1px;
+   font-size: 0.9rem;
+   font-family: "Playfair Display", sans-serif;
+   background-color: #ff5733;
+   color: white;
+   border: none;
+   border-radius: 5px;
+   cursor: pointer;
+   text-decoration: none;
+   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+   transition: background-color 0.3s ease;
+   /* transition: all 3s ease; */
+}
+
+.cta-button:hover {
+   background-color: #e64a19;
+   transform: scale(1.03);
+   transition: transform 0.3s ease;
+}
+
+.hero-content {
+   max-width: 800px;
+   font-size: 2rem;
+   padding: 2rem;
+   z-index: 3;
+}
+
+/* feature section */
+
+.feature-section {
+   background: #111;
+   color: #fff;
+   padding: 5rem 2rem;
+   text-align: center;
+}
+
+.feature-section h2 {
+   font-size: 2.5rem;
+   margin-bottom: 3rem;
+}
+
+.features-container {
+   display: flex;
+   justify-content: center;
+   flex-wrap: wrap;
+   gap: 2rem;
+   max-width: 1000px;
+   margin: 0 auto;
+}
+
+.feature {
+   background: #1b1b1b;
+   border-radius: 10px;
+   padding: 2rem;
+   flex: 1 1 250px;
+   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+   transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature:hover {
+   transform: translate(-5px);
+   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.feature h3 {
+   font-size: 1.5rem;
+   margin-bottom: 1rem;
+}
+
+.feature p {
+   font-size: 1rem;
+   color: #ccc;
+   line-height: 1.6;
+}
+
+/* Gallery Section */
+
+.gallery-section {
+   background: #000;
+   color: #fff;
+   padding: 5rem;
+   text-align: center;
+}
+
+.gallery-section h2 {
+   font-size: 2.5rem;
+   margin-bottom: 3rem;
+   font-family: "Playfair Display", sans-serif;
+}
+
+.gallery-grid {
+   display: grid;
+   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+   gap: 1rem;
+   max-width: 1200px;
+   margin: 0 auto;
+}
+
+.gallery-grid img {
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+   border-radius: 10px;
+   transition: transform 0.3s ease box-shadow 0.3s ease;
+   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.galley-grid img:hover {
+   transform: scale(1.03);
+   box-shadow: 0 6px rgba(255, 87, 51, 0.4);
+}
+
+.contact-section {
+   background: #111;
+   color: #fff;
+   padding: 5rem 2rem;
+   text-align: center;
+}
+
+.contact-section h2 {
+   font-size: 2.5rem;
+   margin-bottom: 1rem;
+   font-family: "Playfair Display", serif;
+}
+
+.contact-section p {
+   font-size: 1.1rem;
+   margin-bottom: 2rem;
+   color: #ccc;
+}
+
+.contact-form {
+   max-width: 600px;
+   margin: 0 auto;
+   display: flex;
+   flex-direction: column;
+   gap: 1.5rem;
+}
+
+.contact-form input,
+.contact-form textarea {
+   padding: 1rem;
+   border: none;
+   border-radius: 8px;
+   font-size: 1rem;
+   background-color: #1f1f1f;
+   color: #fff;
+}
+
+.contact-form textarea {
+   resize: vertical;
+   min-height: 120px;
+}
+
+.contact-form button {
+   background: #ff5733;
+   color: white;
+   border: none;
+   padding: 1rem 2rem;
+   font-size: 1rem;
+   border-radius: 5px;
+   cursor: pointer;
+   transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.contact-form button:hover {
+   background: #e64a19;
+   transform: scale(1.05);
+}
