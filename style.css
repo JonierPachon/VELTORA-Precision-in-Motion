@@ -83,8 +83,10 @@ header {
 
 .feature-section {
    background: #111;
+   /* background: #000; */
    color: #fff;
-   padding: 5rem 2rem;
+   /* padding: 5rem 2rem; */
+   padding: 5rem 10rem;
    text-align: center;
 }
 
@@ -131,8 +133,10 @@ header {
 
 .gallery-section {
    background: #000;
+   /* background: #111; */
    color: #fff;
-   padding: 5rem;
+   padding: 5rem 15rem;
+   /* padding: 5rem; */
    text-align: center;
 }
 
@@ -144,7 +148,7 @@ header {
 
 .gallery-grid {
    display: grid;
-   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
    gap: 1rem;
    max-width: 1200px;
    margin: 0 auto;
@@ -159,14 +163,16 @@ header {
    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-.galley-grid img:hover {
-   transform: scale(1.03);
-   box-shadow: 0 6px rgba(255, 87, 51, 0.4);
+.gallery-grid img:hover {
+   /* transform: scale(1.03); */
+   transform: scale(1.04);
+   box-shadow: 0 1.5px 1px rgba(255, 87, 51, 0.4);
 }
 
 /* Contact Section */
 
 .contact-section {
+   /* background: #111; */
    background: #111;
    color: #fff;
    padding: 5rem 2rem;

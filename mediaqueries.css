@@ -1,3 +1,26 @@
+@media (max-width: 1210px) {
+   .gallery-section {
+      padding: 5rem 10rem;
+   }
+   .gallery-grid {
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+   }
+   .gallery-grid img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 1px 3px rgba(255, 87, 51, 0.4);
+   }
+}
+
+@media (max-width: 940px) {
+   .gallery-section {
+      padding: 5rem 7rem;
+   }
+
+   .gallery-grid {
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+   }
+}
+
 @media (max-width: 768px) {
    header {
       flex-direction: column;
@@ -26,5 +49,35 @@
 
    .feature h3 {
       font-size: 1.3rem;
+   }
+   .gallery-section h2 {
+      font-size: 2rem;
+   }
+
+   .gallery-section {
+      padding: 5rem;
+   }
+
+   .contact-section h2 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+   }
+}
+
+@media (max-width: 680px) {
+   .gallery-section {
+      padding: 5rem 7rem;
+   }
+}
+
+@media (max-width: 520px) {
+   .gallery-section {
+      padding: 5rem;
+   }
+}
+
+@media (max-width: 470px) {
+   .gallery-section {
+      padding: 3.5rem 3rem;
    }
 }
