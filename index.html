@@ -6,14 +6,30 @@
       <title>VELTORA | Precision in Motion</title>
       <link rel="stylesheet" href="style.css" />
       <link rel="stylesheet" href="mediaqueries.css" />
+      <script src="script.js" defer></script>
    </head>
 
    <body>
       <section class="hero-section" id="home">
          <img
-            src="./assets/home super car.png"
+            src="./assets/home super car 1.png"
             alt="car"
-            class="background-img"
+            class="background-img visible1"
+         />
+         <img
+            src="./assets/home super car 2.png"
+            alt="car"
+            class="background-img visible2"
+         />
+         <img
+            src="./assets/home super car 3.png"
+            alt="car"
+            class="background-img visible3"
+         />
+         <img
+            src="./assets/home super car 4.png"
+            alt="car"
+            class="background-img visible4"
          />
          <header>
             <h2>VELTORA | Precision in Motion</h2>
@@ -52,28 +68,74 @@
                   experience
                </p>
             </div>
+            <a
+               href="#gallery"
+               class="scroll-down"
+               aria-label="Scroll to Gallery"
+            >
+               <svg
+                  class="arrow-icon"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="36"
+                  height="36"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#ff5733"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+               >
+                  <line x1="12" y1="5" x2="12" y2="19" />
+                  <polyline points="19 12 12 19 5 12" />
+               </svg>
+            </a>
          </div>
       </section>
       <section class="gallery-section" id="gallery">
          <h2>The Art of Performance</h2>
          <div class="gallery-grid">
-            <img
-               src="./assets/side view of super car 9.png"
-               alt="Side view of super car"
-            />
-            <img
-               src="./assets/interior of super car.png"
-               alt="interior of super car"
-            />
-            <img
-               src="./assets/rear view of super car 3.png"
-               alt="rear view of super car"
-            />
-            <img
-               src="./assets/super car in motion 6.png"
-               alt="super car in motion"
-            />
+            <div class="gallery-item">
+               <img
+                  src="./assets/side view of super car 9.png"
+                  alt="Side view of super car"
+               />
+            </div>
+            <div class="gallery-item">
+               <img
+                  src="./assets/interior of super car.png"
+                  alt="interior of super car"
+               />
+            </div>
+            <div class="gallery-item">
+               <img
+                  src="./assets/rear view of super car 3.png"
+                  alt="rear view of super car"
+               />
+            </div>
+            <div class="gallery-item">
+               <img
+                  src="./assets/super car in motion 6.png"
+                  alt="super car in motion"
+               />
+            </div>
          </div>
+         <a href="#contact" class="scroll-down" aria-label="Scroll to Contact">
+            <svg
+               class="arrow-icon"
+               xmlns="http://www.w3.org/2000/svg"
+               width="36"
+               height="36"
+               viewBox="0 0 24 24"
+               fill="none"
+               stroke="#ff5733"
+               stroke-width="2"
+               stroke-linecap="round"
+               stroke-linejoin="round"
+            >
+               <line x1="12" y1="5" x2="12" y2="19" />
+               <polyline points="19 12 12 19 5 12" />
+            </svg>
+         </a>
       </section>
 
       <section class="contact-section" id="contact">
@@ -100,5 +162,9 @@
             </ul>
          </div>
       </footer>
+      <div id="lightbox" class="lightbox">
+         <span class="close-btn">&times;</span>
+         <img id="lightbox-img" src="" alt="Expanded supercar image" />
+      </div>
    </body>
 </html>
