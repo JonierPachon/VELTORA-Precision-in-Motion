@@ -95,10 +95,6 @@
       font-size: 2rem;
    }
 
-   /* .gallery-section {
-      padding: 5rem;
-   } */
-
    .contact-section h2 {
       font-size: 2rem;
       margin-bottom: 1.5rem;
@@ -117,6 +113,16 @@
    .gallery-section {
       padding-bottom: 3rem;
    }
+
+   .close-btn {
+      top: 4rem;
+   }
+}
+
+@media (max-width: 610px) {
+   .close-btn {
+      top: 6rem;
+   }
 }
 
 @media (max-width: 590px) {
@@ -133,10 +139,20 @@
    .gallery-section {
       padding: 5rem;
    }
+
+   .close-btn {
+      top: 8rem;
+   }
 }
 
 @media (max-width: 470px) {
    .gallery-section {
       padding: 3.5rem 3rem;
+   }
+}
+
+@media (max-width: 420px) {
+   .close-btn {
+      top: 10rem;
    }
 }
