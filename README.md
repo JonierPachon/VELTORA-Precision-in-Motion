@@ -1,7 +1,8 @@
-**VELTORA** is a fully responsive, visually captivating landing page designed to showcase the power, speed, and elegance of a fictional supercar. Built using HTML, CSS, and JavaScript, this project highlights custom animations, clean layout structure, and performance-focused UI/UX design.
+# 🚗 VELTORA – Precision in Motion
+A sleek, responsive landing page crafted with HTML, CSS, and JavaScript, inspired by high-end automotive design. It features smooth scrolling, animated UI elements, and an elegant lightbox gallery—all with a modern, high‑performance look and feel.
 
 # 🔥 Live Preview
-🌐 [View Live Project](https://delicate-muffin-733873.netlify.app/#home)
+🌐 **Demo:** [Live on Netlify](https://delicate-muffin-733873.netlify.app/#home)
 
 # 📸 Screenshots
 <p align="center">
@@ -17,14 +18,13 @@
     <img src="https://github.com/JonierPachon/VELTORA-Precision-in-Motion/blob/main/phone%203.1.png" alt="My Image 2" width="200" style="margin: 0 200px;">
 </p>
 
-# 🚀 Features
-- Responsive design for all screen sizes
-- Sleek scroll animations and transitions
-- Custom gallery and feature sections
-- Animated buttons and light/dark theme contrast
-- Built with semantic HTML5 and modular CSS
-- JavaScript-powered interactivity and smooth UX
-- Optimized for performance and accessibility
+# ✨ Features
+- Fully **responsive layout**, optimized for mobile, tablet, and desktop
+- **Smooth scroll and scroll-triggered animations** enhance user engagement
+- **Lightbox gallery** showcasing high-resolution supercar imagery
+- **Modal image expansion** with close (“X”) controls
+- Interactive **scroll-down button** guiding users through sections
+- Subtle **wood-tone accents** for a luxurious aesthetic
 
 # 🧱 Tech Stack
 - **HTML5** – Semantic structure
@@ -32,12 +32,16 @@
 - **JavaScript (Vanilla)** – Interactivity and transitions
 - **Netlify** – Deployment
 
-# 🛠️ Installation
-Clone the repository:
-  ```bash
-    git clone https://github.com/JonierPachon/random-joke-generator.git
-  ```
-Open ```index.html``` in your browser or use a live server extension in your code editor.
+# 🧩 Installation & Use
+1. Clone the repository:
+```bash
+    git clone https://github.com/JonierPachon/VELTORA-Precision-in-Motion.git
+```
+2. Navigate into the directory:
+```bash
+    cd VELTORA-Precision-in-Motion
+```
+3. Open ```index.html``` in your browser or deploy using any static site host (Netlify, GitHub Pages, Vercel).
 
 # 📂 Folder Structure
 ```bash
@@ -56,15 +60,12 @@ Open ```index.html``` in your browser or use a live server extension in your cod
 - Enhancing user experience through animations and detail-oriented design
 - Handling responsive breakpoints for modern devices
 
-# 💡 Future Enhancements
-- Add theme toggle (light/dark)
-- Connect to backend for newsletter or contact form
-- Convert to a React component or integrate with Webflow
+# 📋 Future Ideas
+- Integrate Figma or Sketch, and expose design files
+- Add an accessible contact form or simulated pop-up for fun demo
+- Include performance and SEO enhancements
 
-# 🤝 Contributing
-This is a solo portfolio project, but suggestions are always welcome!
-
-# 📬 Contact
-Want to work together or have questions?
+# 📬 Feedback & Contact
+This is a creative, experimental project. If you’d like to connect or explore a custom landing page with similar feel and animation, feel free to reach out!
 - 📧 jhonier.pachon1015@gmail.com
 - 🌐 [Portfolio Website](https://funny-rabanadas-625f53.netlify.app/)
