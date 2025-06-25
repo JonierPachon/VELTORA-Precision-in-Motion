@@ -6,16 +6,16 @@ A sleek, responsive landing page crafted with HTML, CSS, and JavaScript, inspire
 
 # 📸 Screenshots
 <p align="center">
-    <img src="https://github.com/JonierPachon/VELTORA-Precision-in-Motion/blob/main/pc.png" alt="My Image 1" width="700" style="margin: 0 10px;">
-    <img src="https://github.com/JonierPachon/VELTORA-Precision-in-Motion/blob/main/phone.png" alt="My Image 2" width="200" style="margin: 0 200px;">
+    <img src="https://github.com/JonierPachon/VELTORA-Precision-in-Motion/blob/main/pc.png" alt="My Image 1" width="680" style="margin: 0 10px;">
+    <img src="https://github.com/JonierPachon/VELTORA-Precision-in-Motion/blob/main/phone.png" alt="My Image 2" width="180" style="margin: 0 200px;">
 </p>
 <p align="center">
-    <img src="https://github.com/JonierPachon/VELTORA-Precision-in-Motion/blob/main/pc%202.png" alt="My Image 1" width="700" style="margin: 0 10px;">
-    <img src="https://github.com/JonierPachon/VELTORA-Precision-in-Motion/blob/main/phone%202.1.png" alt="My Image 2" width="200" style="margin: 0 200px;">
+    <img src="https://github.com/JonierPachon/VELTORA-Precision-in-Motion/blob/main/pc%202.png" alt="My Image 1" width="680" style="margin: 0 10px;">
+    <img src="https://github.com/JonierPachon/VELTORA-Precision-in-Motion/blob/main/phone%202.1.png" alt="My Image 2" width="180" style="margin: 0 200px;">
 </p>
 <p align="center">
-    <img src="https://github.com/JonierPachon/VELTORA-Precision-in-Motion/blob/main/pc%203.png" alt="My Image 1" width="700" style="margin: 0 10px;">
-    <img src="https://github.com/JonierPachon/VELTORA-Precision-in-Motion/blob/main/phone%203.1.png" alt="My Image 2" width="200" style="margin: 0 200px;">
+    <img src="https://github.com/JonierPachon/VELTORA-Precision-in-Motion/blob/main/pc%203.png" alt="My Image 1" width="680" style="margin: 0 10px;">
+    <img src="https://github.com/JonierPachon/VELTORA-Precision-in-Motion/blob/main/phone%203.1.png" alt="My Image 2" width="180" style="margin: 0 200px;">
 </p>
 
 # ✨ Features
