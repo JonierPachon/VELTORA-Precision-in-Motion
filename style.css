@@ -8,6 +8,10 @@
    box-sizing: border-box;
 }
 
+body {
+   overflow-x: hidden;
+}
+
 body,
 html {
    height: 100%;
@@ -90,12 +94,26 @@ header {
 
 /* feature section */
 
+.reveal {
+   opacity: 0;
+   transform: translateY(40px);
+   transition: all 0.6s ease;
+   will-change: opacity, transform;
+}
+
+.reveal.active {
+   opacity: 1;
+   transform: translateY(0);
+}
+
 .feature-section {
    background: #111;
    color: #fff;
    padding: 5rem 10rem;
    text-align: center;
    position: relative;
+   /*  */
+   min-height: 100vh;
 }
 
 .feature-section h2 {
@@ -119,6 +137,7 @@ header {
    flex: 1 1 250px;
    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
    transition: transform 0.3s ease, box-shadow 0.3s ease;
+   min-height: 150px;
 }
 
 .feature:hover {
