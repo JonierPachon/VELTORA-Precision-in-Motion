@@ -193,3 +193,9 @@
       top: 10rem;
    }
 }
+
+@media (max-width: 384px) {
+   .feature {
+      min-height: 200px;
+   }
+}

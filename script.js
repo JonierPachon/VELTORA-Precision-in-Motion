@@ -15,64 +15,46 @@ document.addEventListener("DOMContentLoaded", () => {
    type(); // starts the typing when page Loads
 });
 
-// Pop up features
-// window.addEventListener("scroll", debounce(revealElements, 10));
-// window.addEventListener("scroll", observer);
+// Pop up features and their animations
 
-// This ensure smoother behavior on mobile and prevents skipped animations.
-// function debounce(func, wait = 15, immediate = true) {
-//    let timeout;
-//    return function () {
-//       const context = this,
-//          args = arguments;
-//       const later = function () {
-//          timeout = null;
-//          if (!immediate) func.apply(context, args);
-//       };
-//       const callNow = immediate && !timeout;
-//       clearTimeout(timeout);
-//       timeout = setTimeout(later, wait);
-//       if (callNow) func.apply(context, args);
-//    };
-// }
+let lastScrollTop = window.pageYOffset;
 
-// function revealElements() {
-//    const reveals = document.querySelectorAll(".reveal");
+function revealElementsOnScroll() {
+   const reveals = document.querySelectorAll(".reveal");
+   const windowHeight = window.innerHeight;
+   const revealPoint = 115;
 
-//    for (let i = 0; i < reveals.length; i++) {
-//       const windowHeight = window.innerHeight;
-//       const elementTop = reveals[i].getBoundingClientRect().top;
-//       const elementBottom = reveals[i].getBoundingClientRect().bottom;
-//       const revealPoint = 250;
+   const currentScrollTop = window.pageYOffset;
+   const scrollingDown = currentScrollTop > lastScrollTop;
+   lastScrollTop = currentScrollTop;
 
-//       // Only add active when element is in view
-//       if (elementTop < windowHeight - revealPoint && elementBottom > 0) {
-//          reveals[i].classList.add("active");
-//          // Optional: only remove if it's completely off screen (top or bottom)
-//       } else if (elementBottom < 0 || elementTop > windowHeight) {
-//          reveals[i].classList.remove("active"); //removes it when out of view
-//       }
-//    }
-// }
+   reveals.forEach((el, i) => {
+      const topEl = el.getBoundingClientRect().top;
+      const bottomEl = el.getBoundingClientRect().bottom;
 
-const observer = new IntersectionObserver(
-   (entries) => {
-      entries.forEach((entry) => {
-         if (entry.isIntersecting) {
-            entry.target.classList.add("active");
-         } else {
-            // Replay the animation on scroll up/down
-            entry.target.classList.remove("active");
+      const isAboveViewport = bottomEl < 0;
+      const isBelowViewport = topEl > windowHeight;
+      const isInViewport = topEl < windowHeight - revealPoint && bottomEl > 0;
+
+      if (scrollingDown) {
+         // SCROLLING DOWN → animate if entering viewport from below
+         if (isInViewport && !el.classList.contains("active")) {
+            setTimeout(() => {
+               el.style.setProperty("--delay", `${i * 100}ms`);
+               el.classList.add("active");
+            }, i * 100);
          }
-      });
-   },
-   {
-      threshold: [0, 0.1, 0.25], // Trigger when 10% of the element is visible
-   }
-);
+      }
 
-// Observe each reveal element
-document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+      if (isBelowViewport && el.classList.contains("active")) {
+         el.classList.remove("active");
+      }
+   });
+}
+
+window.addEventListener("scroll", revealElementsOnScroll);
+
+///////////////////////////////////////////////////////////////////////////////////////////////
 
 // Display the images at a larger scale
 const galleryItems = document.querySelectorAll(".gallery-item img");

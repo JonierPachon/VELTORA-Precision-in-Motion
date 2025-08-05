@@ -96,14 +96,19 @@ header {
 
 .reveal {
    opacity: 0;
-   transform: translateY(40px);
-   transition: all 0.6s ease;
+   /* transform: translateY(50px);
+   transition: all 0.8s ease, transform 0.8s ease;
    will-change: opacity, transform;
+   backface-visibility: hidden; */
+   transform: translateY(60px) scale(0.98);
+   transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+   transition-delay: var(--delay, 0ms);
 }
 
 .reveal.active {
    opacity: 1;
-   transform: translateY(0);
+   transform: translateY(0) scale(1);
 }
 
 .feature-section {
@@ -112,8 +117,6 @@ header {
    padding: 5rem 10rem;
    text-align: center;
    position: relative;
-   /*  */
-   min-height: 100vh;
 }
 
 .feature-section h2 {
@@ -123,6 +126,7 @@ header {
 
 .features-container {
    display: flex;
+   flex-direction: column;
    justify-content: center;
    flex-wrap: wrap;
    gap: 2rem;
@@ -134,10 +138,9 @@ header {
    background: #1b1b1b;
    border-radius: 10px;
    padding: 2rem;
-   flex: 1 1 250px;
+   flex: 1 1 150px;
    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
    transition: transform 0.3s ease, box-shadow 0.3s ease;
-   min-height: 150px;
 }
 
 .feature:hover {
