@@ -219,13 +219,38 @@ header {
    position: relative;
 }
 
+/* .gallery-section {
+   padding: 80px 0;
+   background: #000;
+} */
+
 .gallery-section h2 {
    font-size: 2.5rem;
    margin-bottom: 3rem;
    font-family: "Playfair Display", sans-serif;
 }
 
-.gallery-grid {
+/* .carousel {
+   width: 100%;
+   overflow: hidden;
+   position: relative;
+   height: 400px; /* Adjust height as needed 
+}
+
+.carousel-track {
+   display: flex;
+   width: 400%;
+   transition: transform 0.6s ease-in-out;
+}
+
+.carousel-image {
+   width: 100%;
+   flex-shrink: 0;
+   height: 100%;
+   object-fit: cover;
+} */
+
+/* .gallery-grid {
    display: grid;
    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
    gap: 1rem;
@@ -250,6 +275,29 @@ header {
 .gallery-grid img:hover {
    transform: scale(1.03);
    box-shadow: 0 1.5px 1px rgba(255, 87, 51, 0.4);
+} */
+
+.slider {
+   position: relative;
+   background: #000116;
+   width: 800px;
+   min-height: 500px;
+   margin: 20px;
+   overflow: hidden;
+   border-radius: 10px;
+}
+
+.slider .slide {
+   position: absolute;
+   width: 100%;
+   height: 100%;
+}
+
+.slider .slide img {
+   position: absolute;
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
 }
 
 .lightbox {
