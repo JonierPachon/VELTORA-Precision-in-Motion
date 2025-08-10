@@ -69,3 +69,10 @@ A sleek, responsive landing page crafted with HTML, CSS, and JavaScript, inspire
 This is a creative, experimental project. If you’d like to connect or explore a custom landing page with similar feel and animation, feel free to reach out!
 - 📧 jhonier.pachon1015@gmail.com
 - 🌐 [Portfolio Website](https://funny-rabanadas-625f53.netlify.app/)
+
+## License
+This project is licensed under the Creative Commons Attribution–NonCommercial 4.0 International (CC BY-NC 4.0) License.
+
+You are free to view, share, and adapt this work for personal or educational purposes, but commercial use is prohibited without prior written consent from the author.
+
+© 2025 Jonier Pachon — All Rights Reserved
