@@ -1,81 +1,77 @@
-* {
-   box-sizing: border-box;
-}
-
 body {
-   margin: 0;
-   font-family: sans-serif;
-   background: #f4f4f4;
-   display: flex;
-   justify-content: center;
-   align-items: center;
    min-height: 100vh;
+   display: grid;
+   place-items: center;
 }
 
-.carousel {
+.slider {
+   height: 250px;
+   margin: auto;
    position: relative;
    width: 90%;
-   max-width: 1000px;
+   display: grid;
+   place-items: center;
    overflow: hidden;
 }
 
-.carousel-track {
+.slide-track {
    display: flex;
-   transition: opacity 1s ease;
-   position: relative;
+   width: calc(250px * 18);
+   animation: scroll 40s linear infinite;
 }
 
-.carousel-slide {
-   min-width: 300px;
-   margin: 0 10px;
-   flex-shrink: 0;
-   transition: transform 0.3s ease;
-   opacity: 0;
+.slide-track:hover {
+   animation-play-state: paused;
 }
 
-.carousel-slide img {
+@keyframes scroll {
+   0% {
+      transform: translateX(0);
+   }
+   100% {
+      transform: translateX(calc(-250px * 9));
+   }
+}
+
+.slide {
+   height: 200px;
+   width: 250px;
+   display: flex;
+   align-items: center;
+   padding: 15px;
+   perspective: 100px;
+}
+
+img {
    width: 100%;
-   height: auto;
-   display: block;
-   border-radius: 8px;
-   transition: transform 0.3s ease;
+   transition: transform 1s;
+}
+img:hover {
+   transform: translateZ(20px);
 }
 
-.carousel-slide img:hover {
-   transform: scale(1.05);
-}
+/* Gradient Shadows */
 
-.carousel-slide.visible {
-   opacity: 1;
-}
-
-.carousel-buttons {
+.slider::before,
+.slider::after {
+   background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(255, 255, 255, 0) 100%
+   );
+   content: "";
+   height: 100%;
    position: absolute;
-   top: 50%;
-   width: 100%;
-   display: flex;
-   justify-content: space-between;
-   transform: translateY(-50%);
+   width: 15%;
+   z-index: 2;
 }
 
-.carousel-buttons button {
-   background-color: rgba(0, 0, 0, 0.6);
-   color: white;
-   border: none;
-   padding: 10px 20px;
-   cursor: pointer;
-   font-size: 18px;
-   border-radius: 4px;
+.slider::before {
+   left: 0;
+   top: 0;
 }
-
-@media (max-width: 768px) {
-   .carousel-slide {
-      min-width: 45%;
-   }
-}
-
-@media (max-width: 500px) {
-   .carousel-slide {
-      min-width: 90%;
-   }
+.slider::after {
+   right: 0;
+   top: 0;
+   transform: rotateZ(180deg);
 }

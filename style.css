@@ -1,4 +1,9 @@
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+/* 
+  VELTORA | Precision in Motion
+  Created by Jonier Pachon
+  Licensed under CC BY-NC 4.0 — https://creativecommons.org/licenses/by-nc/4.0/
+  © 2025 Jonier Pachon — All Rights Reserved
+*/
 
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
@@ -64,6 +69,11 @@ header {
    z-index: 3;
 }
 
+header h1 {
+   font-size: 2.5rem;
+   font-family: "Playfair Display", sans-serif;
+}
+
 .cta-button {
    padding: 1rem 2rem;
    letter-spacing: 1px;
@@ -96,14 +106,11 @@ header {
 
 .reveal {
    opacity: 0;
-   /* transform: translateY(50px);
-   transition: all 0.8s ease, transform 0.8s ease;
-   will-change: opacity, transform;
-   backface-visibility: hidden; */
    transform: translateY(60px) scale(0.98);
    transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
       transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
    transition-delay: var(--delay, 0ms);
+   will-change: opacity, transform;
 }
 
 .reveal.active {
@@ -219,121 +226,147 @@ header {
    position: relative;
 }
 
-/* .gallery-section {
-   padding: 80px 0;
-   background: #000;
-} */
-
 .gallery-section h2 {
    font-size: 2.5rem;
    margin-bottom: 3rem;
    font-family: "Playfair Display", sans-serif;
 }
 
-/* .carousel {
-   width: 100%;
-   overflow: hidden;
-   position: relative;
-   height: 400px; /* Adjust height as needed 
-}
-
-.carousel-track {
-   display: flex;
-   width: 400%;
-   transition: transform 0.6s ease-in-out;
-}
-
-.carousel-image {
-   width: 100%;
-   flex-shrink: 0;
-   height: 100%;
-   object-fit: cover;
-} */
-
-/* .gallery-grid {
-   display: grid;
-   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-   gap: 1rem;
-   max-width: 1200px;
-   margin: 0 auto;
-}
-
-.gallery-item {
-   cursor: pointer;
-   transition: transform 0.3s ease;
-}
-
-.gallery-grid img {
-   width: 100%;
-   height: auto;
-   object-fit: cover;
-   border-radius: 10px;
-   transition: transform 0.3s ease, box-shadow 0.3s ease;
-   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-.gallery-grid img:hover {
-   transform: scale(1.03);
-   box-shadow: 0 1.5px 1px rgba(255, 87, 51, 0.4);
-} */
-
 .slider {
+   height: 250px;
+   margin: auto;
    position: relative;
-   background: #000116;
-   width: 800px;
-   min-height: 500px;
-   margin: 20px;
+   width: 90%;
+   display: grid;
+   place-items: center;
    overflow: hidden;
-   border-radius: 10px;
+   outline: none;
 }
 
-.slider .slide {
-   position: absolute;
-   width: 100%;
-   height: 100%;
+.slider:focus {
+   outline: 2px solid #ff5733;
+   outline-offset: 6px;
 }
 
-.slider .slide img {
-   position: absolute;
-   width: 100%;
-   height: 100%;
-   object-fit: cover;
+.slide-track {
+   display: flex;
+   width: calc(250px * 42); /* number of .slide items */
+   animation: scroll 40s linear infinite;
 }
 
-.lightbox {
-   display: none;
-   position: fixed;
-   top: 0;
-   left: 0;
-   width: 100%;
-   height: 100%;
-   background: rgba(0, 0, 0, 0.9);
-   justify-content: center;
+.slide-track:hover {
+   animation-play-state: paused;
+}
+
+@keyframes scroll {
+   0% {
+      transform: translateX(0);
+   }
+   100% {
+      transform: translateX(
+         calc(-250px * 21)
+      ); /* Half of the total numbers items ensures a seamless loop */
+   }
+}
+
+.slide {
+   height: 200px;
+   width: 250px;
+   display: flex;
    align-items: center;
-   z-index: 9999;
-   padding: 2rem;
+   padding: 15px;
+   perspective: 100px;
+}
+img {
+   width: 100%;
+   transition: transform 1s;
 }
 
-.lightbox img {
-   max-width: 100%;
-   max-height: 80%;
-   border-radius: 10px;
-   box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+img:hover {
+   transform: translateZ(20px);
 }
 
-.close-btn {
+.slider::before,
+.slider::after {
+   background: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 0) 100%
+   );
+   content: "";
+   height: 100%;
    position: absolute;
-   top: 30px;
-   right: 40px;
-   font-size: 3rem;
-   color: #ff5733;
-   cursor: pointer;
-   transition: color 0.3s ease;
-   z-index: 10000;
+   width: 15%;
+   z-index: 2;
 }
 
-.close-btn:hover {
+.slider::before {
+   left: 0;
+   top: 0;
+}
+
+.slider::after {
+   right: 0;
+   top: 0;
+   transform: rotateZ(180deg);
+}
+
+.slider-btn {
+   position: absolute;
+   z-index: 3;
+   top: 50%;
+   transform: translateY(-50%);
+   background: rgba(255, 87, 51, 0.15);
+   border: none;
    color: #fff;
+   font-size: 1.75rem;
+   font-size: 1.75rem;
+   width: 44px;
+   border-radius: 50%;
+   cursor: pointer;
+}
+
+.slider-prev {
+   left: 0.5rem;
+}
+.slider-next {
+   right: 0.5rem;
+}
+.slider-btn:focus-visible {
+   outline: 2px solid #ff5733;
+}
+
+/* When we switch to manual mode (no auto-scroll), animate transforms smoothly */
+.slider.is-manual .slide-track {
+   animation: none !important; /*kill the auto loop*/
+   transition: transform 400ms ease;
+}
+
+/* --- Respect reduced motion --- */
+@media (prefers-reduced-motion: reduce) {
+   .slide-track {
+      animation: none !important;
+   }
+   .reveal {
+      transition: none !important; /* :contentReference[oaicite:2]{index=2} */
+      opacity: 1;
+      transform: none !important; /* :contentReference[oaicite:2]{index=2} */
+   }
+
+   /* Stop hover zoom and bouncy arrows */
+   img:hover {
+      transform: none !important; /* :contentReference[oaicite:3]{index=3} */
+   }
+
+   .scroll-down {
+      animation: none !important; /* :contentReference[oaicite:4]{index=4} */
+   }
+
+   /* Modal entrance animation off */
+
+   .modal-content {
+      animation: none !important; /* :contentReference[oaicite:5]{index=5} */
+   }
 }
 
 /* Contact Section */
@@ -404,7 +437,7 @@ header {
    left: 0;
    width: 100%;
    height: 100%;
-   background: rgba(0, 0, 0, 0, 0.85);
+   background: rgba(0, 0, 0, 0.85);
    justify-content: center;
    align-items: center;
    z-index: 9999;
@@ -439,6 +472,8 @@ header {
    font-size: 2rem;
    color: #ff5733;
    cursor: pointer;
+   background: none;
+   border: none;
 }
 
 .close-modal:hover {
