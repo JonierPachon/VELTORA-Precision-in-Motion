@@ -118,6 +118,13 @@ header h1 {
    transform: translateY(0) scale(1);
 }
 
+.reveal.static {
+   opacity: 1 !important;
+   transform: none !important;
+   animation: none !important;
+   transition: none !important;
+}
+
 .feature-section {
    background: #111;
    color: #fff;

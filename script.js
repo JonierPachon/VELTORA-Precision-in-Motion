@@ -35,8 +35,22 @@ if (typingEl) {
 
 // Pop up features and their animations
 
+let lastY = window.pageYOffset || 0;
+let scrollingDown = true;
+
+window.addEventListener(
+   "scroll",
+   () => {
+      const y = window.pageYOffset || 0;
+      scrollingDown = y > lastY;
+      lastY = y;
+   },
+   {
+      passive: true,
+   }
+);
+
 const revealEls = document.querySelectorAll(".reveal");
-const replayOnExit = false; // set to true if you want re-animations when elements leave/enter again
 
 if (!prefersReduced && revealEls.length) {
    const observer = new IntersectionObserver(
@@ -44,35 +58,46 @@ if (!prefersReduced && revealEls.length) {
          entries.forEach((entry) => {
             const el = entry.target;
 
+            // optional:stagger based on order in parent
+            const siblings = Array.from(
+               el.parentElement.querySelectorAll(".reveal")
+            );
+            const idx = siblings.indexOf(el);
+            el.style.setProperty("--delay", `${Math.max(idx, 0) * 100}ms`);
+
             if (entry.isIntersecting) {
-               // Stagger based on order inside its parent ( features-container)
-               const siblings = Array.from(
-                  el.parentElement.querySelectorAll(".reveal")
-               );
-               const idx = siblings.indexOf(el);
-
-               el.style.setProperty("--delay", `${Math.max(idx, 0) * 100}ms`);
-
-               el.classList.add("active");
-
-               // One-and-one animation by default
-               if (!replayOnExit) observer.unobserve(el); // one-and-one
-            } else if (replayOnExit) {
-               el.classList.remove("active");
+               if (scrollingDown) {
+                  // scrolling DOWN → allow animation
+                  el.classList.remove("active");
+                  el.classList.add("active");
+               } else {
+                  // scrolling UP → show, but keep still
+                  el.classList.remove("active");
+                  el.classList.add("static");
+               }
+            } else {
+               // out of view → reset so it can animate next time
+               el.classList.remove("active", "static");
             }
          });
       },
       {
          root: null,
-         threshold: 0.2, // fire when ~20% visible
-         rootMargin: "0px 0px -60px 0px", // small bottom margin for earlier trigger
+         threshold: 0, // trigger as soon as it it touches viewport
+         //rootMargin: "0px 0px -60px 0px",
+         rootMargin: "0px 0px -10% 0px",
+         //rootMargin: "0px 0px -15% 0px", // small bottom margin for earlier trigger
       }
    );
 
    // Respect reduced motion: show features immediately
    revealEls.forEach((el) => observer.observe(el));
 } else {
-   revealEls.forEach((el) => el.classList.add("active"));
+   // Reduced motion: just show them without animation
+   revealEls.forEach((el) => {
+      el.classList.remove("active");
+      el.classList.add("static");
+   });
 }
 
 // Gallery Section
