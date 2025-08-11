@@ -16,7 +16,6 @@
    </head>
 
    <body>
-
       <section class="hero-section" id="home">
          <img
             src="./assets/home super car 1.png"
@@ -99,8 +98,21 @@
       <section class="gallery-section" id="gallery">
          <h2>The Art of Performance</h2>
 
-         <div class="slider" role="region" aria-roledescription="carousel" aria-label="Supercar gallery" aria-live="off" tabindex="0">
-            <button class="slider-btn slider-prev" type="button" aria-label="Previous slide">‹</button>
+         <div
+            class="slider"
+            role="region"
+            aria-roledescription="carousel"
+            aria-label="Supercar gallery"
+            aria-live="off"
+            tabindex="0"
+         >
+            <button
+               class="slider-btn slider-prev"
+               type="button"
+               aria-label="Previous slide"
+            >
+               ‹
+            </button>
             <div class="slide-track">
                <div class="slide">
                   <img
@@ -114,7 +126,7 @@
                      alt="interior of super car"
                   />
                </div>
-               
+
                <div class="slide">
                   <img
                      src="./assets/rear view of super car.png"
@@ -187,7 +199,7 @@
                      alt="interior of super car"
                   />
                </div>
-                <div class="slide">
+               <div class="slide">
                   <img
                      src="./assets/super car in motion 2.png"
                      alt="super car in motion"
@@ -223,7 +235,7 @@
                      alt="super car in motion"
                   />
                </div>
-               
+
                <div class="slide">
                   <img
                      src="./assets/side view of super car 2.png"
@@ -237,7 +249,7 @@
                   />
                </div>
                <!-- Repeat the slides -->
-                <div class="slide">
+               <div class="slide">
                   <img
                      src="./assets/side view of super car.png"
                      alt="Side view of super car"
@@ -249,7 +261,7 @@
                      alt="interior of super car"
                   />
                </div>
-               
+
                <div class="slide">
                   <img
                      src="./assets/rear view of super car.png"
@@ -322,7 +334,7 @@
                      alt="interior of super car"
                   />
                </div>
-                <div class="slide">
+               <div class="slide">
                   <img
                      src="./assets/super car in motion 2.png"
                      alt="super car in motion"
@@ -358,7 +370,7 @@
                      alt="super car in motion"
                   />
                </div>
-               
+
                <div class="slide">
                   <img
                      src="./assets/side view of super car 2.png"
@@ -371,13 +383,21 @@
                      alt="super car in motion"
                   />
                </div>
-               
             </div>
-            <button class="slider-btn slider-next" type="button" aria-label="Next slide">›</button>
+            <button
+               class="slider-btn slider-next"
+               type="button"
+               aria-label="Next slide"
+            >
+               ›
+            </button>
 
-            <div class="slider-status" aria-live="polite" aria-atomic="true"></div>
-         
-
+            <div
+               class="slider-status"
+               aria-live="polite"
+               aria-atomic="true"
+            ></div>
+         </div>
          <a href="#contact" class="scroll-down" aria-label="Scroll to Contact">
             <svg
                class="arrow-icon"
@@ -406,11 +426,26 @@
 
          <form class="contact-form" action="" method="post">
             <label for="full_name">Your Full Name:</label>
-            <input type="text" id= "full_name" placeholder="Your Full Name" required autocomplete="name" />
+            <input
+               type="text"
+               id="full_name"
+               placeholder="Your Full Name"
+               required
+               autocomplete="name"
+            />
             <label for="email">Email Address:</label>
-            <input type="email" id = "email" placeholder="Email Address" required autocomplete="email"/>
+            <input
+               type="email"
+               id="email"
+               placeholder="Email Address"
+               required
+               autocomplete="email"
+            />
             <label for="message">Message</label>
-            <textarea placeholder="Message or Model Preference" name="message"></textarea>
+            <textarea
+               placeholder="Message or Model Preference"
+               name="message"
+            ></textarea>
             <button type="submit">Launch the Machine</button>
          </form>
       </section>
@@ -426,10 +461,17 @@
          </div>
       </footer>
 
-    
       <div class="modal-overlay" id="modal">
-         <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-describedby="modal-desc">
-            <button type="button" class="close-modal" aria-label="Close dialog">×</button>
+         <div
+            class="modal-content"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modal-title"
+            aria-describedby="modal-desc"
+         >
+            <button type="button" class="close-modal" aria-label="Close dialog">
+               ×
+            </button>
             <h3 id="modal-title">Message Sent!</h3>
             <p>
                This is a concept project created for fun and learning. Thank you
@@ -437,6 +479,5 @@
             </p>
          </div>
       </div>
-      
    </body>
 </html>

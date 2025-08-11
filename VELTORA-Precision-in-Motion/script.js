@@ -35,59 +35,77 @@ if (typingEl) {
 
 // Pop up features and their animations
 
-let lastScrollTop = window.pageYOffset;
+const revealEls = document.querySelectorAll(".reveal");
+const replayOnExit = false; // set to true if you want re-animations when elements leave/enter again
 
-function revealElementsOnScroll() {
-   const reveals = document.querySelectorAll(".reveal");
-   const windowHeight = window.innerHeight;
-   const revealPoint = 115;
+if (!prefersReduced && revealEls.length) {
+   const observer = new IntersectionObserver(
+      (entries) => {
+         entries.forEach((entry) => {
+            const el = entry.target;
 
-   const currentScrollTop = window.pageYOffset;
-   const scrollingDown = currentScrollTop > lastScrollTop;
-   lastScrollTop = currentScrollTop;
+            if (entry.isIntersecting) {
+               // Stagger based on order inside its parent ( features-container)
+               const siblings = Array.from(
+                  el.parentElement.querySelectorAll(".reveal")
+               );
+               const idx = siblings.indexOf(el);
 
-   reveals.forEach((el, i) => {
-      const topEl = el.getBoundingClientRect().top;
-      const bottomEl = el.getBoundingClientRect().bottom;
+               el.style.setProperty("--delay", `${Math.max(idx, 0) * 100}ms`);
 
-      const isAboveViewport = bottomEl < 0;
-      const isBelowViewport = topEl > windowHeight;
-      const isInViewport = topEl < windowHeight - revealPoint && bottomEl > 0;
-
-      if (scrollingDown) {
-         // SCROLLING DOWN → animate if entering viewport from below
-         if (isInViewport && !el.classList.contains("active")) {
-            setTimeout(() => {
-               el.style.setProperty("--delay", `${i * 100}ms`);
                el.classList.add("active");
-            }, i * 100);
-         }
-      }
 
-      if (isBelowViewport && el.classList.contains("active")) {
-         el.classList.remove("active");
+               // One-and-one animation by default
+               if (!replayOnExit) observer.unobserve(el); // one-and-one
+            } else if (replayOnExit) {
+               el.classList.remove("active");
+            }
+         });
+      },
+      {
+         root: null,
+         threshold: 0.2, // fire when ~20% visible
+         rootMargin: "0px 0px -60px 0px", // small bottom margin for earlier trigger
       }
-   });
+   );
+
+   // Respect reduced motion: show features immediately
+   revealEls.forEach((el) => observer.observe(el));
+} else {
+   revealEls.forEach((el) => el.classList.add("active"));
 }
 
 // Gallery Section
 
 // Reveal-on-scroll: only run if not reduced motion
-if (!prefersReduced) {
-   window.addEventListener("scroll", revealElementsOnScroll);
-} else {
-   document
-      .querySelectorAll(".reveal")
-      .forEach((el) => el.classList.add("active"));
-}
+// if (!prefersReduced) {
+//    window.addEventListener("scroll", revealElementsOnScroll);
+// } else {
+//    document
+//       .querySelectorAll(".reveal")
+//       .forEach((el) => el.classList.add("active"));
+// }
 
 // --- Slider keyboard controls ---
 const slider = document.querySelector(".slider");
 const track = document.querySelector(".slide-track");
 const slides = track ? Array.from(track.querySelectorAll(".slide")) : [];
 let index = 0;
-const SLIDE_WIDTH = slides[0]?.getBoundingClientRect().width || 250;
+//const SLIDE_WIDTH = slides[0]?.getBoundingClientRect().width || 250;
+const SLIDE_WIDTH = slides[0]?.offsetWidth || 250;
 const statusEl = document.querySelector(".slider-status");
+
+function recalcWidth() {
+   const w = slides[0]?.offsetWidth;
+   if (w && w !== SLIDE_WIDTH) {
+      SLIDE_WIDTH = w;
+      // re-apply current position so it doesn't "jump" after resize
+      goTo(index);
+   }
+}
+
+window.addEventListener("load", recalcWidth);
+window.addEventListener("resize", recalcWidth);
 
 function updateStatus() {
    if (!statusEl) return;
@@ -102,12 +120,14 @@ function enableManualMode() {
    if (!slider || !track) return;
    slider.classList.add("is-manual"); // disables CSS marquee via CSS rule
 }
-if (prefersReduced) enableManualMode();
+// if (prefersReduced) enableManualMode();
 
 // Move by one slide
 function goTo(i) {
    if (!track) return;
-   index = i;
+   // clamp to bounds so we never overshoot into blank space
+   const max = Math.max(0, slides.length - 1);
+   index = Math.min(Math.max(i, 0), max);
    track.style.transform = `translateX(-${index * SLIDE_WIDTH}px)`;
    updateStatus();
 }
@@ -156,6 +176,7 @@ if (slider) {
 }
 
 updateStatus();
+// slider.addEventListener("mouseenter", enableManualMode);
 
 // submit form/////////////////////////////////////////////////////////
 const form = document.querySelector(".contact-form");

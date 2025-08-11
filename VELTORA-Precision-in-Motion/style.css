@@ -232,6 +232,10 @@ header h1 {
    font-family: "Playfair Display", sans-serif;
 }
 
+.gallery-section .scroll-down {
+   z-index: 1;
+}
+
 .slider {
    height: 250px;
    margin: auto;
@@ -298,6 +302,7 @@ img:hover {
    position: absolute;
    width: 15%;
    z-index: 2;
+   pointer-events: none; /* prevents gradient masks from stealing clicks */
 }
 
 .slider::before {
@@ -313,7 +318,7 @@ img:hover {
 
 .slider-btn {
    position: absolute;
-   z-index: 3;
+   z-index: 10; /* higher than ::before/::after and slides */
    top: 50%;
    transform: translateY(-50%);
    background: rgba(255, 87, 51, 0.15);
@@ -324,6 +329,7 @@ img:hover {
    width: 44px;
    border-radius: 50%;
    cursor: pointer;
+   pointer-events: auto;
 }
 
 .slider-prev {
