@@ -425,28 +425,48 @@
          </p>
 
          <form class="contact-form" action="" method="post">
-            <label for="full_name">Your Full Name:</label>
-            <input
-               type="text"
-               id="full_name"
-               placeholder="Your Full Name"
-               required
-               autocomplete="name"
-            />
-            <label for="email">Email Address:</label>
-            <input
-               type="email"
-               id="email"
-               placeholder="Email Address"
-               required
-               autocomplete="email"
-            />
-            <label for="message">Message</label>
-            <textarea
-               placeholder="Message or Model Preference"
-               name="message"
-            ></textarea>
+            <div class="form-field">
+               <label for="full_name">Full Name</label>
+               <!-- placeholder="Enter your full name" -->
+               <input
+                  placeholder="Enter your full name"
+                  type="text"
+                  id="full_name"
+                  name="full_name"
+                  required
+                  autocomplete="name"
+                  inputmode="text"
+               />
+            </div>
+
+            <div class="form-field">
+               <label for="email">Email Address</label>
+               <!--  placeholder="Enter your email address" -->
+               <input
+                  placeholder="Enter your email address"
+                  type="email"
+                  id="email"
+                  name="email"
+                  required
+                  autocomplete="email"
+                  inputmode="email"
+                  spellcheck="false"
+               />
+            </div>
+
+            <div class="form-field">
+               <label for="message">Message</label>
+               <!-- placeholder="Message or Model Preference" -->
+               <textarea
+                  placeholder="Message or Model Preference"
+                  id="message"
+                  name="message"
+                  rows="5"
+               ></textarea>
+            </div>
             <button type="submit">Launch the Machine</button>
+
+            <!-- a subtle disclaimer to keep things honest for a concept site -->
          </form>
       </section>
 
@@ -468,14 +488,15 @@
             aria-modal="true"
             aria-labelledby="modal-title"
             aria-describedby="modal-desc"
+            tabindex="-1"
          >
             <button type="button" class="close-modal" aria-label="Close dialog">
                ×
             </button>
-            <h3 id="modal-title">Message Sent!</h3>
+            <h3 id="modal-title">Message sent!</h3>
             <p>
-               This is a concept project created for fun and learning. Thank you
-               for checking out VELTORA!
+               This is a concept demo — no personal data is stored. Like what
+               you see? Let’s build yours.
             </p>
          </div>
       </div>

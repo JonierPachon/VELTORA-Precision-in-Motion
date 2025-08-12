@@ -102,14 +102,18 @@ if (!prefersReduced && revealEls.length) {
 
 // Gallery Section
 
-// Reveal-on-scroll: only run if not reduced motion
-// if (!prefersReduced) {
-//    window.addEventListener("scroll", revealElementsOnScroll);
-// } else {
-//    document
-//       .querySelectorAll(".reveal")
-//       .forEach((el) => el.classList.add("active"));
-// }
+const sliderEl = document.querySelector(".slider");
+const trackEl = document.querySelector(".slide-track");
+
+// 1) Read original slides, keep only unique by image src
+
+function uniqueSlidesFrom(track) {
+   const seen = new Set();
+   const uniques = [];
+   Array.from(track.querySelectorAll(".slide")).forEach((slide) => {
+      const img = slide.querySelector("img");
+   });
+}
 
 // --- Slider keyboard controls ---
 const slider = document.querySelector(".slider");

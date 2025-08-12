@@ -7,6 +7,19 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
+:root {
+   --accent-color: #ff5733;
+   --ink-1: #ffffff;
+   /* --ink-2: #e6e6e6; */
+   --ink-2: #e6e6e6;
+   --ink-3: #b3b3b3;
+   --field-bg: #1a1a1a;
+   --field-border: #2a2a2a;
+   --focus-ring: rgba(255, 87, 51, 0.18);
+   --error: #ff4d4f;
+   /* --ok: #27ae5ffa; */
+   --ok: rgba(255, 255, 255, 0.18);
+}
 * {
    margin: 0;
    padding: 0;
@@ -228,7 +241,7 @@ header h1 {
 .gallery-section {
    background: #000;
    color: #fff;
-   padding: 5rem 15rem;
+   padding: 5rem 6.5rem;
    text-align: center;
    position: relative;
 }
@@ -258,11 +271,12 @@ header h1 {
    outline: 2px solid #ff5733;
    outline-offset: 6px;
 }
+/* Carousel core - no hard-coded width or count */
 
 .slide-track {
    display: flex;
-   width: calc(250px * 42); /* number of .slide items */
-   animation: scroll 40s linear infinite;
+   width: max-content; /* grows to fit children */
+   animation: scroll 58s linear infinite;
 }
 
 .slide-track:hover {
@@ -270,27 +284,30 @@ header h1 {
 }
 
 @keyframes scroll {
-   0% {
+   from {
       transform: translateX(0);
    }
-   100% {
-      transform: translateX(
-         calc(-250px * 21)
-      ); /* Half of the total numbers items ensures a seamless loop */
+   to {
+      transform: translateX(var(--scroll-distance, -1000px));
    }
 }
 
 .slide {
    height: 200px;
-   width: 250px;
+   /* width: 250px; */
+   /* width: 80vw; */
+   width: auto;
    display: flex;
    align-items: center;
-   padding: 15px;
+   padding: 8px;
    perspective: 100px;
 }
-img {
-   width: 100%;
+.slide img {
+   width: auto;
    transition: transform 1s;
+   /*  */
+   height: 180px;
+   border-radius: 8px;
 }
 
 img:hover {
@@ -398,8 +415,12 @@ img:hover {
 }
 
 .contact-section p {
-   font-size: 1.1rem;
-   margin-bottom: 2rem;
+   /* font-size: 1.1rem;
+   margin-bottom: 2rem; */
+   /* font-size: 1.16rem;
+   margin-bottom: 3.5rem; */
+   font-size: 1.14rem;
+   margin-bottom: 2.5rem;
    color: #ccc;
 }
 
@@ -408,38 +429,122 @@ img:hover {
    margin: 0 auto;
    display: flex;
    flex-direction: column;
-   gap: 1.5rem;
+   gap: 1.25rem; /* a touch tighter for elegance */
+   text-align: left; /* labels align left, still centered overall via section */
+}
+
+.contact-form .form-field {
+   display: grid;
+   gap: 0.5rem;
+}
+
+.contact-form label {
+   font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto,
+      sans-serif;
+   /* font-size: 0.95rem; */
+   font-size: 0.9rem;
+   letter-spacing: 0.3px;
+   color: var(--ink-2);
 }
 
 .contact-form input,
 .contact-form textarea {
+   font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto,
+      sans-serif;
    padding: 1rem;
-   border: none;
+   border: 1px solid var(--field-border);
    border-radius: 8px;
-   font-size: 1rem;
-   background-color: #1f1f1f;
-   color: #fff;
+   /* font-size: 1rem; */
+   font-size: 0.9rem;
+   background: linear-gradient(
+         180deg,
+         rgba(255, 255, 255, 0.02),
+         rgba(0, 0, 0, 0.06)
+      )
+      var(--field-bg);
+   color: var(--ink-1);
+   transition: border-color 180ms ease, box-shadow 180ms ease,
+      transform 120ms ease;
 }
 
 .contact-form textarea {
+   min-height: 140px; /* slightly taller for luxury feel */
    resize: vertical;
-   min-height: 120px;
 }
 
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+   color: var(--ink-3);
+   opacity: 0.9;
+}
+
+/* Focus elegance */
+.contact-form .form-field:focus-within label {
+   color: var(--accent-color);
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+   border-color: var(--accent-color);
+   box-shadow: 0 0 0 6px var(--focus-ring);
+   outline: none;
+   transform: translateY(-1px);
+}
+
+/* Hover (subtle) */
+.contact-form input:hover,
+.contact-form textarea:hover {
+   border-color: #3a3a3a;
+}
+
+/* Validation states (after user interacts) */
+/* .contact-form input:required:invalid:not(:placeholder-shown),
+.contact-form input:invalid:focus,
+.contact-form textarea:invalid:focus {
+   border-color: var(--error);
+   box-shadow: 0 0 0 6px rgba(255, 77, 79, 0.18);
+} */
+
+/* valid cue*/
+.contact-form input:required:valid {
+   border-color: var(--ok);
+}
+
+input:-webkit-autofill,
+textarea:-webkit-autofill {
+   -webkit-text-fill-color: var(--ink-1);
+   -webkit-box-shadow: 0 0 0px 1000px var(--field-bg) inset;
+   transition: background-color 600000s 0s, color 600000s 0s;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+   .contact-form input:focus,
+   .contact-form textarea:focus {
+      transform: none;
+      transition: none;
+   }
+}
+
+/* Button refinement to match inputs */
 .contact-form button {
    background: #ff5733;
    color: white;
    border: none;
-   padding: 1rem 2rem;
-   font-size: 1rem;
+   padding: 0.9rem 1.2rem;
+   font-size: 12px;
+   font-weight: 600;
+   letter-spacing: 0.4px;
    border-radius: 5px;
    cursor: pointer;
    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .contact-form button:hover {
+   transition: ease-in-out 0.2s;
    background: #e64a19;
-   transform: scale(1.05);
+   /* font-size: 13px; */
+   transform: scale(1.03);
 }
 
 /* Message Sent */
@@ -474,7 +579,7 @@ img:hover {
 }
 
 .modal-content p {
-   font-size: 1rem;
+   font-size: 1.14rem;
    color: #ccc;
 }
 
