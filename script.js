@@ -125,9 +125,23 @@ let SLIDE_WIDTH = slides[0]?.offsetWidth || 250;
 let isAnimating = false;
 const statusEl = document.querySelector(".slider-status");
 
+// pass slide metrics to CSS for accurate keyframe calculations
+if (track) {
+   track.style.setProperty("--slide-count", slides.length);
+   track.style.setProperty("half-count", slides.length / 2);
+   const initial = slides[0]?.offsetWidth;
+   if (initial) {
+      track.style.setProperty("--slide-width", `${initial}px`);
+   }
+}
+
 function recalcWidth() {
    const w = track?.querySelector(".slide")?.offsetWidth;
-   if (w) SLIDE_WIDTH = w;
+   if (w && track) {
+      SLIDE_WIDTH = w;
+      // Inform CSS of the current slide width (includes padding)
+      track.style.setProperty("--slide-width", `${w}px`);
+   }
 }
 
 window.addEventListener("load", recalcWidth);

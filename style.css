@@ -275,9 +275,10 @@ header h1 {
 
 .slide-track {
    display: flex;
-   width: calc(250px * 42); /* number of .slide items */
+   width: calc(
+      var(--slide-width, 250px) * var(--slide-count, 42)
+   ); /* number of .slide items */
    animation: scroll 58s linear infinite;
-   /* gap: 0.2rem; */
 }
 
 .slide-track:hover {
@@ -290,7 +291,7 @@ header h1 {
    }
    100% {
       transform: translateX(
-         calc(-250px * 21)
+         calc(-1 * var(--slide-width, 250px) * var(--half-count, 21))
       ); /* Half of the total numbers items ensures a seamless loop */
    }
 }
