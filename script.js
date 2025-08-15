@@ -102,19 +102,6 @@ if (!prefersReduced && revealEls.length) {
 
 // Gallery Section
 
-// const sliderEl = document.querySelector(".slider");
-// const trackEl = document.querySelector(".slide-track");
-
-// // 1) Read original slides, keep only unique by image src
-
-// function uniqueSlidesFrom(track) {
-//    const seen = new Set();
-//    const uniques = [];
-//    Array.from(track.querySelectorAll(".slide")).forEach((slide) => {
-//       const img = slide.querySelector("img");
-//    });
-// }
-
 // --- Slider keyboard controls ---
 const slider = document.querySelector(".slider");
 const track = document.querySelector(".slide-track");
@@ -127,7 +114,7 @@ if (track) {
    originals.forEach((slide) => track.appendChild(slide.cloneNode(true)));
    slides = Array.from(track.children);
    track.style.setProperty("--slide-count", slides.length);
-   track.style.setProperty("half-count", uniqueCount);
+   track.style.setProperty("--half-count", uniqueCount);
    const initial = slides[0]?.offsetWidth;
    if (initial) {
       track.style.setProperty("--slide-width", `${initial}px`);

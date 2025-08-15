@@ -11,6 +11,12 @@
    }
 }
 
+@media (max-width: 1210px) {
+   .gallery-section {
+      padding: 5rem 6rem;
+   }
+}
+
 @media (max-width: 940px) {
    .feature-section {
       position: static;
