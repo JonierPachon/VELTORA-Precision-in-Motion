@@ -147,6 +147,10 @@ function enableManualMode() {
    if (!slider || !track) return;
    // Pause the auto autoplay loop
    slider.classList.add("is-manual");
+   // Immediately apply manual class so CSS animations stop
+   // Without this the first click may only disable the animation
+   // and the slide move won't happen until the second click
+   void track.offsetWidth; // force reflow to cancel the CSS keyframe animation
    clearTimeout(resumeTimer);
    resumeTimer = setTimeout(() => {
       slider.classList.remove("is-manual");
