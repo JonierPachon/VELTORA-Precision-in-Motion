@@ -121,16 +121,13 @@ const track = document.querySelector(".slide-track");
 const slides = track ? Array.from(track.querySelectorAll(".slide")) : [];
 let index = 0;
 //const SLIDE_WIDTH = slides[0]?.getBoundingClientRect().width || 250;
-const SLIDE_WIDTH = slides[0]?.offsetWidth || 250;
+let SLIDE_WIDTH = slides[0]?.offsetWidth || 250;
+let isAnimating = false;
 const statusEl = document.querySelector(".slider-status");
 
 function recalcWidth() {
-   const w = slides[0]?.offsetWidth;
-   if (w && w !== SLIDE_WIDTH) {
-      SLIDE_WIDTH = w;
-      // re-apply current position so it doesn't "jump" after resize
-      goTo(index);
-   }
+   const w = track?.querySelector(".slide")?.offsetWidth;
+   if (w) SLIDE_WIDTH = w;
 }
 
 window.addEventListener("load", recalcWidth);
@@ -145,35 +142,72 @@ function updateStatus() {
 }
 
 //Switches to manual mode if user focuses slider or prefers-reduced-motion
+let resumeTimer;
 function enableManualMode() {
    if (!slider || !track) return;
-   slider.classList.add("is-manual"); // disables CSS marquee via CSS rule
+   // Pause the auto autoplay loop
+   slider.classList.add("is-manual");
+   clearTimeout(resumeTimer);
+   resumeTimer = setTimeout(() => {
+      slider.classList.remove("is-manual");
+   }, 2000);
 }
-// if (prefersReduced) enableManualMode();
 
-// Move by one slide
-function goTo(i) {
-   if (!track) return;
-   // clamp to bounds so we never overshoot into blank space
-   const max = Math.max(0, slides.length - 1);
-   index = Math.min(Math.max(i, 0), max);
-   track.style.transform = `translateX(-${index * SLIDE_WIDTH}px)`;
+// Slide forward by moving the first slide to the end
+function next() {
+   if (!track || isAnimating) return;
+   enableManualMode();
+   isAnimating = true;
+   track.style.transition = "";
+   track.style.transform = `translateX(-${SLIDE_WIDTH}px)`;
+   track.addEventListener(
+      "transitionend",
+      function handler() {
+         track.removeEventListener("transitionend", handler);
+         track.style.transition = "none";
+         track.appendChild(track.firstElementChild);
+         track.style.transform = "translateX(0)";
+         // Force reflow so the browser acknowledges the style change
+         void track.offsetWidth;
+         track.style.transition = "";
+         isAnimating = false;
+      },
+      {
+         once: true,
+      }
+   );
+
+   index = (index + 1) % slides.length;
    updateStatus();
 }
 
-function next() {
-   enableManualMode();
-   goTo(index + 1);
-}
+// Slide backward by moving the last slide to the front
 
 function prev() {
+   if (!track || isAnimating) return;
    enableManualMode();
-   goTo(index - 1);
+   isAnimating = true;
+   track.style.transition = "none";
+   track.insertBefore(track.lastElementChild, track.firstElementChild);
+   track.style.transform = `translateX(-${SLIDE_WIDTH}px)`;
+   // force reflow before enabling animation
+   void track.offsetWidth;
+   track.style.transition = "";
+   track.style.transform = "translateX(0)";
+   track.addEventListener(
+      "transitionend",
+      () => {
+         isAnimating = false;
+      },
+      { once: true }
+   );
+   index = (index - 1 + slides.length) % slides.length;
+   updateStatus();
 }
 
 // Keyboard: left/Right arrows when slider is focused
 if (slider) {
-   slider.addEventListener("focus", enableManualMode, { once: true });
+   slider.addEventListener("focus", enableManualMode);
 
    slider.addEventListener("keydown", (e) => {
       if (e.key === "ArrowRight") {
@@ -183,16 +217,6 @@ if (slider) {
       if (e.key === "ArrowLeft") {
          e.preventDefault();
          prev();
-      }
-      if (e.key === "Home") {
-         e.preventDefault();
-         enableManualMode();
-         goTo(0);
-      }
-      if (e.key === "End") {
-         e.preventDefault();
-         enableManualMode();
-         goTo(slides.length - 1);
       }
    });
 
