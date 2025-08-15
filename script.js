@@ -118,22 +118,26 @@ if (!prefersReduced && revealEls.length) {
 // --- Slider keyboard controls ---
 const slider = document.querySelector(".slider");
 const track = document.querySelector(".slide-track");
-const slides = track ? Array.from(track.querySelectorAll(".slide")) : [];
-let index = 0;
-//const SLIDE_WIDTH = slides[0]?.getBoundingClientRect().width || 250;
-let SLIDE_WIDTH = slides[0]?.offsetWidth || 250;
-let isAnimating = false;
-const statusEl = document.querySelector(".slider-status");
+let slides = [];
+let uniqueCount = 0;
 
-// pass slide metrics to CSS for accurate keyframe calculations
 if (track) {
+   const originals = Array.from(track.children);
+   uniqueCount = originals.length;
+   originals.forEach((slide) => track.appendChild(slide.cloneNode(true)));
+   slides = Array.from(track.children);
    track.style.setProperty("--slide-count", slides.length);
-   track.style.setProperty("half-count", slides.length / 2);
+   track.style.setProperty("half-count", uniqueCount);
    const initial = slides[0]?.offsetWidth;
    if (initial) {
       track.style.setProperty("--slide-width", `${initial}px`);
    }
 }
+
+let index = 0;
+let SLIDE_WIDTH = slides[0]?.offsetWidth || 250;
+let isAnimating = false;
+const statusEl = document.querySelector(".slider-status");
 
 function recalcWidth() {
    const w = track?.querySelector(".slide")?.offsetWidth;
@@ -150,7 +154,7 @@ window.addEventListener("resize", recalcWidth);
 function updateStatus() {
    if (!statusEl) return;
 
-   const total = slides.length;
+   const total = uniqueCount || slides.length;
    const humanIndex = ((index % total) + total) % total; // safe positive
    statusEl.textContent = `Slide ${humanIndex + 1} of ${total}`;
 }
@@ -195,7 +199,8 @@ function next() {
       }
    );
 
-   index = (index + 1) % slides.length;
+   const total = uniqueCount || slides.length;
+   index = (index + 1) % total;
    updateStatus();
 }
 
@@ -219,7 +224,9 @@ function prev() {
       },
       { once: true }
    );
-   index = (index - 1 + slides.length) % slides.length;
+
+   const total = uniqueCount || slides.length;
+   index = (index - 1 + total) % total;
    updateStatus();
 }
 
