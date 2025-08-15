@@ -24,13 +24,6 @@
       padding-bottom: 3rem;
    }
 
-   .visible1 {
-      display: none;
-   }
-
-   .visible2 {
-      display: block;
-   }
    .gallery-section {
       padding: 5rem;
       padding-bottom: 3rem;
@@ -68,13 +61,6 @@
    .hero-section {
       padding-left: 5rem;
       padding-right: 5rem;
-   }
-   .visible2 {
-      display: none;
-   }
-
-   .visible3 {
-      display: block;
    }
 }
 
@@ -209,13 +195,6 @@
       padding-left: 3rem;
       padding-right: 3rem;
    }
-   .visible3 {
-      display: none;
-   }
-
-   .visible4 {
-      display: block;
-   }
 }
 
 @media (max-width: 520px) {
@@ -257,5 +236,27 @@
    /*  */
    .gallery-section {
       padding: 3.5rem 2rem;
+   }
+}
+
+@media (max-width: 360px) {
+   header {
+      padding: 1rem;
+   }
+
+   .hero-content {
+      font-size: 1rem;
+   }
+
+   .cta-button {
+      font-size: 0.75rem;
+      padding: 0.6rem 1.2rem;
+   }
+
+   .feature-section,
+   .gallery-section,
+   .contact-section {
+      padding-left: 1rem;
+      padding-right: 1rem;
    }
 }

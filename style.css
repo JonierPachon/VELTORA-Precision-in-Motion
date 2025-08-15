@@ -52,21 +52,16 @@ html {
 .background-img {
    width: 100%;
    height: 100%;
-   object-fit: cover;
    position: absolute; /* Position the image behind the overlay */
    top: 0;
    left: 0;
    z-index: 1; /* Ensure the image is behind the overlay */
 }
 
-.visible2 {
-   display: none;
-}
-.visible3 {
-   display: none;
-}
-.visible4 {
-   display: none;
+.background-img img {
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
 }
 
 header {
@@ -505,14 +500,6 @@ header h1 {
 .contact-form textarea:hover {
    border-color: #3a3a3a;
 }
-
-/* Validation states (after user interacts) */
-/* .contact-form input:required:invalid:not(:placeholder-shown),
-.contact-form input:invalid:focus,
-.contact-form textarea:invalid:focus {
-   border-color: var(--error);
-   box-shadow: 0 0 0 6px rgba(255, 77, 79, 0.18);
-} */
 
 /* valid cue*/
 .contact-form input:required:valid {
