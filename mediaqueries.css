@@ -17,16 +17,21 @@
    }
 }
 
+@media (max-width: 1000px) {
+   .slider-btn {
+      display: none;
+   }
+}
+
 @media (max-width: 940px) {
    .feature-section {
       position: static;
-      padding: 5rem;
+      padding: 5rem 3rem;
       padding-bottom: 3rem;
    }
 
    .gallery-section {
-      padding: 5rem;
-      padding-bottom: 3rem;
+      padding: 5rem 3.5rem;
    }
 
    .gallery-grid {
@@ -39,7 +44,7 @@
       justify-content: center;
       align-items: center;
 
-      margin: 5rem auto 0 auto;
+      margin: 3rem auto 0 auto;
       width: 50px;
       height: 50px;
    }
@@ -85,6 +90,11 @@
    .gallery-section h2 {
       font-size: 2rem;
    }
+   .gallery-section {
+      padding-left: 2rem;
+      padding-right: 2rem;
+      padding-bottom: 3rem;
+   }
 
    .contact-section h2 {
       font-size: 2rem;
@@ -96,28 +106,38 @@
    .feature {
       min-height: 175px;
    }
-}
-
-@media (max-width: 700px) {
    .slider {
-      height: clamp(180px, 55vw, 340px);
-      width: 100%;
+      height: fit-content;
    }
-   .slider-track {
-      width: auto !important; /* override fixed calc width */
-      animation: none !important; /* rely on swipe/arrow on mobile */
-      gap: 0.5rem;
-   }
-
    .slide {
-      width: 80vw;
+      width: 40vw;
       height: auto;
       padding: 10px;
    }
+}
+
+@media (max-width: 700px) {
+   .gallery-section {
+      padding: 5rem 2rem;
+   }
+   /* .slider {
+      /* height: clamp(180px, 55vw, 340px); */
+   /*height: clamp(100px, 50vw, 300px);
+      width: 100%;
+   } */
+   /*.slider-track {
+      width: auto !important; /* override fixed calc width */
+   /* animation: none !important; /* rely on swipe/arrow on mobile */
+   /*gap: 0.5rem;
+   }*/
+
+   .slide {
+      height: 20vh;
+      width: auto;
+      padding: 5px;
+   }
 
    .slide img {
-      height: clamp(160px, 50vw, 280px);
-      object-fit: cover;
       border-radius: 10px;
    }
 
@@ -136,7 +156,12 @@
    }
    .slider::before,
    .slider::after {
-      width: 8%; /* slimmer masks to avoid covering content/buttons */
+      width: 8%; /*slimmer masks to avoid covering content/buttons */
+      /* display: none; */
+   }
+   /* remove the arrows */
+   .slider-btn {
+      display: none;
    }
 
    .slider-status {
@@ -184,6 +209,10 @@
 }
 
 @media (max-width: 610px) {
+   .gallery-section {
+      padding-left: 0.8rem;
+      padding-right: 0.8rem;
+   }
    .close-btn {
       top: 6rem;
    }
@@ -201,18 +230,9 @@
       padding-left: 1.5rem;
       padding-right: 1.5rem;
    }
-   .gallery-section {
-      padding: 5rem;
-   }
 
    .close-btn {
       top: 8rem;
-   }
-}
-
-@media (max-width: 470px) {
-   .gallery-section {
-      padding: 3.5rem 3rem;
    }
 }
 
