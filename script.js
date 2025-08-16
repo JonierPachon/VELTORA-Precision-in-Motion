@@ -115,21 +115,20 @@ if (track) {
    slides = Array.from(track.children);
    track.style.setProperty("--slide-count", slides.length);
    track.style.setProperty("--half-count", uniqueCount);
-   const initial = slides[0]?.offsetWidth;
-   if (initial) {
-      track.style.setProperty("--slide-width", `${initial}px`);
-   }
 }
 
 let index = 0;
-let SLIDE_WIDTH = slides[0]?.offsetWidth || 250;
+let SLIDE_WIDTH = 250;
 let isAnimating = false;
 const statusEl = document.querySelector(".slider-status");
 
 function recalcWidth() {
    const w = track?.querySelector(".slide")?.offsetWidth;
    if (w && track) {
-      SLIDE_WIDTH = w;
+      const gap = parseFloat(
+         getComputedStyle(track).columnGap || getComputedStyle(track).gap || 0
+      );
+      SLIDE_WIDTH = w + gap;
       // Inform CSS of the current slide width (includes padding)
       track.style.setProperty("--slide-width", `${w}px`);
    }
@@ -137,6 +136,7 @@ function recalcWidth() {
 
 window.addEventListener("load", recalcWidth);
 window.addEventListener("resize", recalcWidth);
+recalcWidth();
 
 function updateStatus() {
    if (!statusEl) return;

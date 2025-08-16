@@ -116,8 +116,7 @@
    }
 
    .slide img {
-      /* height: clamp(160px, 50vw, 320px); */
-      height: 200px;
+      height: clamp(160px, 50vw, 280px);
       object-fit: cover;
       border-radius: 10px;
    }
