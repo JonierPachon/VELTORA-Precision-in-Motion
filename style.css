@@ -114,7 +114,8 @@ header h1 {
 
 .reveal {
    opacity: 0;
-   transform: translateY(60px) scale(0.98);
+   --reveal-y: 60px;
+   --reveal-scale: 0.98;
    transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
       transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
    transition-delay: var(--delay, 0ms);
@@ -123,14 +124,14 @@ header h1 {
 
 .reveal.active {
    opacity: 1;
-   transform: translateY(0) scale(1);
+   --reveal-y: 0;
+   --reveal-scale: 1;
 }
 
 .reveal.static {
    opacity: 1 !important;
-   transform: none !important;
-   transition: none !important;
-   /* animation: none !important; */
+   --reveal-y: 0;
+   --reveal-scale: 1;
 }
 
 .feature-section {
@@ -157,17 +158,21 @@ header h1 {
 }
 
 .feature {
+   --hover-x: 0;
    background: #1b1b1b;
    border-radius: 10px;
    padding: 2rem;
    flex: 1 1 150px;
    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-   transition: transform 0.3s ease, box-shadow 0.3s ease;
+   transform: translate(var(--hover-x), var(--reveal-y))
+      scale(var(--reveal-scale));
+   transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
 }
 
 .feature:hover {
-   transform: translateX(-5px);
+   --hover-x: -5px;
    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .feature h3 {

@@ -84,9 +84,7 @@ if (!prefersReduced && revealEls.length) {
       {
          root: null,
          threshold: 0, // trigger as soon as it it touches viewport
-         //rootMargin: "0px 0px -60px 0px",
          rootMargin: "0px 0px -10% 0px",
-         //rootMargin: "0px 0px -15% 0px", // small bottom margin for earlier trigger
       }
    );
 
