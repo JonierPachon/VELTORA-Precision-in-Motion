@@ -123,11 +123,13 @@ let isAnimating = false;
 const statusEl = document.querySelector(".slider-status");
 
 function recalcWidth() {
-   const w = track?.querySelector(".slide")?.offsetWidth;
-   if (w && track) {
-      const gap = parseFloat(
-         getComputedStyle(track).columnGap || getComputedStyle(track).gap || 0
-      );
+   const slide = track?.querySelector(".slide");
+   if (slide && track) {
+      const w = slide.offsetWidth;
+      const styles = getComputedStyle(track);
+      let gap = parseFloat(styles.gap);
+      if (Number.isNaN(gap)) gap = parseFloat(styles.columnGap);
+      if (Number.isNaN(gap)) gap = 0;
       SLIDE_WIDTH = w + gap;
       // Inform CSS of the current slide width (includes padding)
       track.style.setProperty("--slide-width", `${w}px`);
@@ -165,6 +167,7 @@ function enableManualMode() {
 // Slide forward by moving the first slide to the end
 function next() {
    if (!track || isAnimating) return;
+   recalcWidth();
    enableManualMode();
    isAnimating = true;
    track.style.transition = "";
@@ -195,6 +198,7 @@ function next() {
 
 function prev() {
    if (!track || isAnimating) return;
+   recalcWidth();
    enableManualMode();
    isAnimating = true;
    track.style.transition = "none";
