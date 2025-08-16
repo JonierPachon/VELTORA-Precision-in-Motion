@@ -269,6 +269,11 @@ header h1 {
    place-items: center;
    overflow: hidden;
    outline: none;
+   cursor: grab;
+}
+
+.slider.dragging {
+   cursor: grabbing;
 }
 
 .slider:focus {

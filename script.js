@@ -240,6 +240,31 @@ if (slider) {
    const nextBtn = document.querySelector(".slider-next");
    prevBtn?.addEventListener("click", prev);
    nextBtn?.addEventListener("click", next);
+
+   // Allow Dragging with pointer
+   let startX = null;
+   slider.addEventListener("pointerdown", (e) => {
+      e.preventDefault();
+      startX = e.clientX;
+      slider.setPointerCapture(e.pointerId);
+      slider.classList.add("dragging");
+      enableManualMode();
+   });
+
+   slider.addEventListener("pointerup", (e) => {
+      if (startX === null) return;
+      const dx = e.clientX - startX;
+      slider.classList.remove("dragging");
+      if (Math.abs(dx) > 30) {
+         dx < 0 ? next() : prev();
+      }
+      startX = null;
+   });
+
+   slider.addEventListener("pointercancel", () => {
+      startX = null;
+      slider.classList.remove("dragging");
+   });
 }
 
 updateStatus();
