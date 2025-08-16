@@ -105,6 +105,8 @@ const slider = document.querySelector(".slider");
 const track = document.querySelector(".slide-track");
 let slides = [];
 let uniqueCount = 0;
+const indicatorsContainer = document.querySelector(".slider-indicators");
+let indicatorDots = [];
 
 if (track) {
    const originals = Array.from(track.children);
@@ -113,6 +115,14 @@ if (track) {
    slides = Array.from(track.children);
    track.style.setProperty("--slide-count", slides.length);
    track.style.setProperty("--half-count", uniqueCount);
+}
+
+if (indicatorsContainer && uniqueCount) {
+   for (let i = 0; i < uniqueCount; i++) {
+      const dot = document.createElement("span");
+      indicatorsContainer.appendChild(dot);
+      indicatorDots.push(dot);
+   }
 }
 
 let index = 0;
@@ -139,11 +149,12 @@ window.addEventListener("resize", recalcWidth);
 recalcWidth();
 
 function updateStatus() {
-   if (!statusEl) return;
-
    const total = uniqueCount || slides.length;
    const humanIndex = ((index % total) + total) % total; // safe positive
-   statusEl.textContent = `Slide ${humanIndex + 1} of ${total}`;
+   if (statusEl) statusEl.textContent = `Slide ${humanIndex + 1} of ${total}`;
+   indicatorDots.forEach((dot, i) => {
+      dot.classList.toggle("active", i === humanIndex);
+   });
 }
 
 //Switches to manual mode if user focuses slider or prefers-reduced-motion
