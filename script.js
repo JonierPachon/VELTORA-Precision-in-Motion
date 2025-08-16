@@ -241,31 +241,53 @@ if (slider) {
    prevBtn?.addEventListener("click", prev);
    nextBtn?.addEventListener("click", next);
 
-   // Allow Dragging with pointer
+   // Allow Dragging with pointer or touch
    let startX = null;
-   slider.addEventListener("pointerdown", (e) => {
-      e.preventDefault();
-      startX = e.clientX;
-      slider.setPointerCapture(e.pointerId);
+   function onStart(x) {
+      startX = x;
       slider.classList.add("dragging");
       enableManualMode();
-   });
+   }
 
-   slider.addEventListener("pointerup", (e) => {
+   function onEnd(x) {
       if (startX === null) return;
-      const dx = e.clientX - startX;
+      const dx = x - startX;
       slider.classList.remove("dragging");
       if (Math.abs(dx) > 30) {
          dx < 0 ? next() : prev();
       }
       startX = null;
-   });
+   }
 
-   slider.addEventListener("pointercancel", () => {
-      startX = null;
-      slider.classList.remove("dragging");
-   });
-}
+   if (window.PointerEvent) {
+      slider.addEventListener("pointerdown", (e) => {
+         e.preventDefault();
+         slider.setPointerCapture(e.pointerId);
+         onStart(e.clientX);
+      });
+
+      slider.addEventListener("pointerup", (e) => {
+         onEnd(e.clientX);
+      });
+
+      slider.addEventListener("pointercancel", () => {
+         startX = null;
+      });
+   }else{
+      // Fallback for browsers without Pointer Events (older mobile Safari)
+      slider.addEventListener("touchstart",(e)=>{
+         onStart(e.touches[0].clientX);
+      },{passive:true});
+
+      slider.addEventListener("touchend",(e)=>{
+         onEnd(e.changeTouches[0].clientX);
+      });
+
+      slider.addEventListener("touchcancel", () => {
+         startX = null;
+         slider.classList.remove("dragging");
+      });
+   }
 
 updateStatus();
 // slider.addEventListener("mouseenter", enableManualMode);

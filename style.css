@@ -270,6 +270,7 @@ header h1 {
    overflow: hidden;
    outline: none;
    cursor: grab;
+   touch-action: pan-y;
 }
 
 .slider.dragging {
