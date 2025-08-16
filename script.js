@@ -272,15 +272,20 @@ if (slider) {
 
       slider.addEventListener("pointercancel", () => {
          startX = null;
+         slider.classList.remove("dragging");
       });
-   }else{
+   } else {
       // Fallback for browsers without Pointer Events (older mobile Safari)
-      slider.addEventListener("touchstart",(e)=>{
-         onStart(e.touches[0].clientX);
-      },{passive:true});
+      slider.addEventListener(
+         "touchstart",
+         (e) => {
+            onStart(e.touches[0].clientX);
+         },
+         { passive: true }
+      );
 
-      slider.addEventListener("touchend",(e)=>{
-         onEnd(e.changeTouches[0].clientX);
+      slider.addEventListener("touchend", (e) => {
+         onEnd(e.changedTouches[0].clientX);
       });
 
       slider.addEventListener("touchcancel", () => {
@@ -288,6 +293,7 @@ if (slider) {
          slider.classList.remove("dragging");
       });
    }
+}
 
 updateStatus();
 // slider.addEventListener("mouseenter", enableManualMode);
