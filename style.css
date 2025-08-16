@@ -129,8 +129,8 @@ header h1 {
 .reveal.static {
    opacity: 1 !important;
    transform: none !important;
-   animation: none !important;
    transition: none !important;
+   /* animation: none !important; */
 }
 
 .feature-section {
@@ -166,7 +166,7 @@ header h1 {
 }
 
 .feature:hover {
-   transform: translate(-5px);
+   transform: translateX(-5px);
    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
 }
 
