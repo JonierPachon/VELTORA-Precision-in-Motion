@@ -94,12 +94,13 @@ header h1 {
    cursor: pointer;
    text-decoration: none;
    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-   transition: background-color 0.3s ease;
+   transition: background-color 0.3s ease, box-shadow 0.3s ease,
+      transform 0.3s ease;
 }
 
 .cta-button:hover {
    background-color: #e64a19;
-   transform: scale(1.03);
+   transform: scale(1.05);
    transition: transform 0.3s ease;
 }
 
@@ -159,14 +160,17 @@ header h1 {
 
 .feature {
    --hover-x: 0;
+   --hover-scale: 1;
    background: #1b1b1b;
+   border: 1px solid transparent;
    border-radius: 10px;
    padding: 2rem;
    flex: 1 1 150px;
    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
    transform: translate(var(--hover-x), var(--reveal-y))
-      scale(var(--reveal-scale));
-   transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
+      scale(calc(var(--reveal-scale) * var(--hover-scale)));
+   transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease,
+      transform 0.3s ease;
 }
 
 .feature:hover {
