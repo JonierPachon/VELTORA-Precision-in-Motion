@@ -310,7 +310,6 @@ if (slider) {
    if (window.PointerEvent) {
       slider.addEventListener("pointerdown", (e) => {
          if (e.target.closest(".slider-btn")) return; // Allow buttons click
-         e.preventDefault();
          slider.setPointerCapture(e.pointerId);
          onStart(e.clientX);
       });
