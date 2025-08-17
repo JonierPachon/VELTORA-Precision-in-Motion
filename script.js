@@ -191,7 +191,7 @@ if (track) requestAnimationFrame(autoSyncIndicators);
 
 //Switches to manual mode if user focuses slider or prefers-reduced-motion
 let resumeTimer;
-function enableManualMode() {
+function enableManualMode(persist = false) {
    if (!slider || !track) return;
    // Pause the auto autoplay loop
    slider.classList.add("is-manual");
@@ -200,9 +200,11 @@ function enableManualMode() {
    // and the slide move won't happen until the second click
    void track.offsetWidth; // force reflow to cancel the CSS keyframe animation
    clearTimeout(resumeTimer);
-   resumeTimer = setTimeout(() => {
-      slider.classList.remove("is-manual");
-   }, 2000);
+   if (!persist) {
+      resumeTimer = setTimeout(() => {
+         slider.classList.remove("is-manual");
+      }, 2000);
+   }
 }
 
 // Slide forward by moving the first slide to the end
@@ -286,10 +288,12 @@ if (slider) {
 
    // Allow Dragging with pointer or touch
    let startX = null;
+   let didDrag = false;
    function onStart(x) {
       startX = x;
       slider.classList.add("dragging");
       enableManualMode();
+      didDrag = false;
    }
 
    function onEnd(x) {
@@ -298,6 +302,7 @@ if (slider) {
       slider.classList.remove("dragging");
       if (Math.abs(dx) > 30) {
          dx < 0 ? next() : prev();
+         didDrag = true;
       }
       startX = null;
    }
@@ -340,7 +345,32 @@ if (slider) {
          slider.classList.remove("dragging");
       });
    }
+
+   track.addEventListener("click", (e) => {
+      if (didDrag) {
+         didDrag = false;
+         return;
+      }
+
+      const slide = e.target.closest(".slide");
+      if (!slide) return;
+      e.stopPropagation();
+      track
+         .querySelectorAll(".slide.active")
+         .forEach((el) => el.classList.remove("active"));
+      slide.classList.add("active");
+      enableManualMode(true);
+   });
 }
+
+document.addEventListener("click", (e) => {
+   if (!slider?.classList.contains("is-manual")) return;
+   if (e.target.closest(".slide img")) return;
+   slider.classList.remove("is-manual");
+   track
+      ?.querySelectorAll(".slide.active")
+      .forEach((el) => el.classList.remove("active"));
+});
 
 updateStatus();
 // slider.addEventListener("mouseenter", enableManualMode);
