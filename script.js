@@ -107,7 +107,7 @@ let slides = [];
 let uniqueCount = 0;
 const indicatorsContainer = document.querySelector(".slider-indicators");
 let indicatorDots = [];
-const MAX_INDICATOR_DOTS = 5;
+const MAX_INDICATOR_DOTS = 7;
 
 if (track) {
    const originals = Array.from(track.children);
@@ -161,6 +161,33 @@ function updateStatus() {
       dot.classList.toggle("active", i === groupIndex);
    });
 }
+
+// keep indicators in sync while the slider auto-scrolls via CSS
+function autoSyncIndicators() {
+   if (!track) return;
+
+   // stop tracking while in manual mode so manual navigation stays accurate
+   if (slider?.classList.contains("is-manual")) {
+      requestAnimationFrame(autoSyncIndicators);
+      return;
+   }
+
+   const transform = getComputedStyle(track).transform;
+   if (transform && transform !== "none") {
+      const matrix = new DOMMatrixReadOnly(transform);
+      const offset = -matrix.m41; // current translation (positive as we scroll left)
+      const total = uniqueCount || slides.length;
+      const newIndex = total ? Math.round(offset / SLIDE_WIDTH) % total : 0;
+      if (newIndex !== index) {
+         index = newIndex;
+         updateStatus();
+      }
+   }
+
+   requestAnimationFrame(autoSyncIndicators);
+}
+
+if (track) requestAnimationFrame(autoSyncIndicators);
 
 //Switches to manual mode if user focuses slider or prefers-reduced-motion
 let resumeTimer;

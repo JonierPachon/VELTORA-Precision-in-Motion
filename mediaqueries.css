@@ -22,9 +22,9 @@
       display: none;
    }
 
-   .slider-indicators {
+   /* .slider-indicators {
       display: flex;
-   }
+   } */
 }
 
 @media (max-width: 940px) {

@@ -396,7 +396,8 @@ header h1 {
    bottom: 0.75rem;
    left: 50%;
    transform: translateX(-50%);
-   display: none;
+   /* display: none; */
+   display: flex;
    gap: 0.4rem;
    pointer-events: none;
 }
