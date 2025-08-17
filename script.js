@@ -304,12 +304,14 @@ if (slider) {
 
    if (window.PointerEvent) {
       slider.addEventListener("pointerdown", (e) => {
+         if (e.target.closest(".slider-btn")) return; // Allow buttons click
          e.preventDefault();
          slider.setPointerCapture(e.pointerId);
          onStart(e.clientX);
       });
 
       slider.addEventListener("pointerup", (e) => {
+         if (e.target.closest(".slider-btn")) return;
          onEnd(e.clientX);
       });
 
@@ -322,12 +324,14 @@ if (slider) {
       slider.addEventListener(
          "touchstart",
          (e) => {
+            if (e.target.closest(".slider-btn")) return;
             onStart(e.touches[0].clientX);
          },
          { passive: true }
       );
 
       slider.addEventListener("touchend", (e) => {
+         if (e.target.closest(".slider-btn")) return;
          onEnd(e.changedTouches[0].clientX);
       });
 
