@@ -107,6 +107,7 @@ let slides = [];
 let uniqueCount = 0;
 const indicatorsContainer = document.querySelector(".slider-indicators");
 let indicatorDots = [];
+const MAX_INDICATOR_DOTS = 5;
 
 if (track) {
    const originals = Array.from(track.children);
@@ -118,7 +119,8 @@ if (track) {
 }
 
 if (indicatorsContainer && uniqueCount) {
-   for (let i = 0; i < uniqueCount; i++) {
+   const dotCount = Math.min(uniqueCount, MAX_INDICATOR_DOTS);
+   for (let i = 0; i < dotCount; i++) {
       const dot = document.createElement("span");
       indicatorsContainer.appendChild(dot);
       indicatorDots.push(dot);
@@ -152,8 +154,11 @@ function updateStatus() {
    const total = uniqueCount || slides.length;
    const humanIndex = ((index % total) + total) % total; // safe positive
    if (statusEl) statusEl.textContent = `Slide ${humanIndex + 1} of ${total}`;
+
+   const dotCount = indicatorDots.length;
+   const groupIndex = total ? Math.floor((humanIndex / total) * dotCount) : 0;
    indicatorDots.forEach((dot, i) => {
-      dot.classList.toggle("active", i === humanIndex);
+      dot.classList.toggle("active", i === groupIndex);
    });
 }
 
