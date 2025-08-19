@@ -9,8 +9,8 @@
 
 :root {
    --accent-color: #ff5733;
+   --hover: #e64a19;
    --ink-1: #ffffff;
-   /* --ink-2: #e6e6e6; */
    --ink-2: #e6e6e6;
    --ink-3: #b3b3b3;
    --field-bg: #1a1a1a;
@@ -38,7 +38,7 @@ html {
 }
 
 .hero-section {
-   color: white;
+   color: var(--ink-1);
    position: relative;
    height: 100vh;
    overflow: hidden;
@@ -87,7 +87,7 @@ header h1 {
    letter-spacing: 1px;
    font-size: 0.9rem;
    font-family: "Playfair Display", sans-serif;
-   background-color: #ff5733;
+   background-color: var(--accent-color);
    color: white;
    border: none;
    border-radius: 5px;
@@ -99,7 +99,7 @@ header h1 {
 }
 
 .cta-button:hover {
-   background-color: #e64a19;
+   background-color: var(--hover);
    transform: scale(1.05);
    transition: transform 0.3s ease;
 }
@@ -136,8 +136,8 @@ header h1 {
 }
 
 .feature-section {
-   background: #111;
-   color: #fff;
+   background: var(--field-bg);
+   color: var(--ink-1);
    padding: 5rem 10rem;
    text-align: center;
    position: relative;
@@ -161,7 +161,7 @@ header h1 {
 .feature {
    --hover-x: 0;
    --hover-scale: 1;
-   background: #1b1b1b;
+   background: var(--field-bg);
    border: 1px solid transparent;
    border-radius: 10px;
    padding: 2rem;
@@ -201,7 +201,7 @@ header h1 {
    display: flex;
    justify-content: center;
    align-items: center;
-   color: #ff5733;
+   color: var(--accent-color);
    animation: bounce 2s infinite;
    transition: background-color 0.3s ease, transform 0.3s ease;
    cursor: pointer;
@@ -216,12 +216,12 @@ header h1 {
 .arrow-icon {
    width: 28px;
    height: 28px;
-   stroke: #ff5733;
+   stroke: var(--accent-color);
    transition: stroke 0.3s ease;
 }
 
 .scroll-down:hover .arrow-icon {
-   stroke: #e64a19;
+   stroke: var(--hover);
 }
 
 @keyframes bounce {
@@ -243,8 +243,8 @@ header h1 {
 /* Gallery Section */
 
 .gallery-section {
-   background: #000;
-   color: #fff;
+   background: var(--field-bg);
+   color: var(--ink-1);
    padding: 5rem 7rem 6rem;
    text-align: center;
    position: relative;
@@ -278,7 +278,7 @@ header h1 {
 }
 
 .slider:focus {
-   outline: 2px solid #ff5733;
+   outline: 2px solid var(--accent-color);
    outline-offset: 6px;
 }
 /* Carousel core - no hard-coded width or count */
@@ -339,7 +339,7 @@ header h1 {
 .slider::after {
    background: linear-gradient(
       to right,
-      rgba(0, 0, 0, 1) 0%,
+      var(--field-bg) 0%,
       rgba(0, 0, 0, 0) 100%
    );
    content: "";
@@ -368,7 +368,7 @@ header h1 {
    transform: translateY(-50%);
    background: rgba(255, 87, 51, 0.15);
    border: none;
-   color: #fff;
+   color: var(--ink-1);
    font-size: 1.75rem;
    font-size: 1.75rem;
    width: 44px;
@@ -384,7 +384,7 @@ header h1 {
    right: 0.5rem;
 }
 .slider-btn:focus-visible {
-   outline: 2px solid #ff5733;
+   outline: 2px solid var(--accent-color);
 }
 
 /* When we switch to manual mode (no auto-scroll), animate transforms smoothly */
@@ -413,9 +413,9 @@ header h1 {
 }
 
 .slider-indicators span.active {
-   background: #ff5733;
-   border-color: #ff5733;
-   box-shadow: 0 0 2px #ff5733;
+   background: var(--accent-color);
+   border-color: var(--accent-color);
+   box-shadow: 0 0 2px var(--accent-color);
 }
 
 /* --- Respect reduced motion --- */
@@ -448,8 +448,8 @@ header h1 {
 /* Contact Section */
 
 .contact-section {
-   background: #111;
-   color: #fff;
+   background: var(--field-bg);
+   color: var(--ink-1);
    padding: 5rem 2rem;
    text-align: center;
 }
@@ -566,8 +566,8 @@ textarea:-webkit-autofill {
 
 /* Button refinement to match inputs */
 .contact-form button {
-   background: #ff5733;
-   color: white;
+   background: var(--accent-color);
+   color: var(--ink-1);
    border: none;
    padding: 0.9rem 1.2rem;
    font-size: 12px;
@@ -580,8 +580,7 @@ textarea:-webkit-autofill {
 
 .contact-form button:hover {
    transition: ease-in-out 0.2s;
-   background: #e64a19;
-   /* font-size: 13px; */
+   background: var(--hover);
    transform: scale(1.03);
 }
 
@@ -602,7 +601,7 @@ textarea:-webkit-autofill {
 .modal-content {
    position: relative;
    background: #1f1f1f;
-   color: #fff;
+   color: var(--ink-1);
    padding: 2rem;
    border-radius: 10px;
    max-width: 400px;
@@ -612,7 +611,7 @@ textarea:-webkit-autofill {
 }
 
 .modal-content h3 {
-   color: #ff5733;
+   color: var(--accent-color);
    margin-bottom: 1rem;
 }
 
@@ -626,14 +625,14 @@ textarea:-webkit-autofill {
    top: 20px;
    right: 30px;
    font-size: 2rem;
-   color: #ff5733;
+   color: var(--accent-color);
    cursor: pointer;
    background: none;
    border: none;
 }
 
 .close-modal:hover {
-   color: #fff;
+   color: var(--ink-1);
 }
 
 @keyframes fadeIn {
@@ -649,7 +648,7 @@ textarea:-webkit-autofill {
 
 /* Footer Section */
 .site-footer {
-   background: #0d0d0d;
+   background: var(--field-bg);
    color: #bbb;
    padding: 2rem 1rem;
    text-align: center;
@@ -677,5 +676,5 @@ textarea:-webkit-autofill {
 }
 
 .footer-links li a:hover {
-   color: #ff5733;
+   color: var(--accent-color);
 }

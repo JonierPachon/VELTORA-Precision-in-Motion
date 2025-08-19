@@ -298,11 +298,28 @@ if (slider) {
    // Allow Dragging with pointer or touch
    let startX = null;
    let didDrag = false;
-   function onStart(x) {
+   let pressedSlide = null;
+   function onStart(x, target) {
       startX = x;
+      pressedSlide = target?.closest(".slide") || null;
       slider.classList.add("dragging");
       enableManualMode();
       didDrag = false;
+   }
+
+   function handleSlideClick(slide) {
+      const wasActive = slide.classList.contains("active");
+      track
+         .querySelectorAll(".slide.active")
+         .forEach((el) => el.classList.remove("active"));
+      if (wasActive) {
+         // Second tap on the same slide: collapse and resume autoplay
+         slider.classList.remove("is-manual");
+      } else {
+         // Activate slide and pause carousel
+         slide.classList.add("active");
+         enableManualMode(true);
+      }
    }
 
    function onEnd(x) {
@@ -312,15 +329,19 @@ if (slider) {
       if (Math.abs(dx) > 30) {
          dx < 0 ? next() : prev();
          didDrag = true;
+      } else if (pressedSlide) {
+         handleSlideClick(pressedSlide);
+         didDrag = true;
       }
       startX = null;
+      pressedSlide = null;
    }
 
    if (window.PointerEvent) {
       slider.addEventListener("pointerdown", (e) => {
          if (e.target.closest(".slider-btn")) return; // Allow buttons click
          slider.setPointerCapture(e.pointerId);
-         onStart(e.clientX);
+         onStart(e.clientX, e.target);
       });
 
       slider.addEventListener("pointerup", (e) => {
@@ -330,6 +351,7 @@ if (slider) {
 
       slider.addEventListener("pointercancel", () => {
          startX = null;
+         pressedSlide = null;
          slider.classList.remove("dragging");
       });
    } else {
@@ -338,7 +360,7 @@ if (slider) {
          "touchstart",
          (e) => {
             if (e.target.closest(".slider-btn")) return;
-            onStart(e.touches[0].clientX);
+            onStart(e.touches[0].clientX, e.target);
          },
          { passive: true }
       );
@@ -350,6 +372,7 @@ if (slider) {
 
       slider.addEventListener("touchcancel", () => {
          startX = null;
+         pressedSlide = null;
          slider.classList.remove("dragging");
       });
    }
@@ -363,18 +386,7 @@ if (slider) {
       const slide = e.target.closest(".slide");
       if (!slide) return;
       e.stopPropagation();
-      const wasActive = slide.classList.contains("active");
-      track
-         .querySelectorAll(".slide.active")
-         .forEach((el) => el.classList.remove("active"));
-      if (wasActive) {
-         // Second Tap on the same slide: collapse and resume autoplay
-         slider.classList.remove("is-manual");
-      } else {
-         // Active slide and pause carousel
-         slide.classList.add("active");
-         enableManualMode(true);
-      }
+      handleSlideClick(slide);
    });
 }
 
