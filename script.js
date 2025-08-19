@@ -130,7 +130,6 @@ if (indicatorsContainer && uniqueCount) {
 let index = 0;
 let SLIDE_WIDTH = 250;
 let isAnimating = false;
-const statusEl = document.querySelector(".slider-status");
 
 function recalcWidth() {
    const slide = track?.querySelector(".slide");
@@ -153,7 +152,6 @@ recalcWidth();
 function updateStatus() {
    const total = uniqueCount || slides.length;
    const humanIndex = ((index % total) + total) % total; // safe positive
-   if (statusEl) statusEl.textContent = `Slide ${humanIndex + 1} of ${total}`;
 
    const dotCount = indicatorDots.length;
    const groupIndex = total ? Math.floor((humanIndex / total) * dotCount) : 0;

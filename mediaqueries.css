@@ -153,12 +153,6 @@
    .slider-btn {
       display: none;
    }
-
-   .slider-status {
-      margin-top: 0.75rem;
-      font-size: 0.9rem;
-      color: #ccc;
-   }
 }
 
 @media (max-width: 680px) {
