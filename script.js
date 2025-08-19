@@ -142,12 +142,23 @@ function recalcWidth() {
       SLIDE_WIDTH = w + gap;
       // Inform CSS of the current slide width (includes padding)
       track.style.setProperty("--slide-width", `${w}px`);
+
+      // Restart the autoplay animation so new widths take effect
+      track.style.animation = "none";
+      void track.offsetWidth; // force reflow
+      track.style.removeProperty("animation");
    }
 }
 
 window.addEventListener("load", recalcWidth);
 window.addEventListener("resize", recalcWidth);
 recalcWidth();
+
+// Recalculate one Lazy-loaded images finish loading (Firefox)
+track?.querySelectorAll("img").forEach((img) => {
+   if (img.complete) return;
+   img.addEventListener("load", recalcWidth, { once: true });
+});
 
 function updateStatus() {
    const total = uniqueCount || slides.length;
