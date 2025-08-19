@@ -354,11 +354,18 @@ if (slider) {
       const slide = e.target.closest(".slide");
       if (!slide) return;
       e.stopPropagation();
+      const wasActive = slide.classList.contains("active");
       track
          .querySelectorAll(".slide.active")
          .forEach((el) => el.classList.remove("active"));
-      slide.classList.add("active");
-      enableManualMode(true);
+      if (wasActive) {
+         // Second Tap on the same slide: collapse and resume autoplay
+         slider.classList.remove("is-manual");
+      } else {
+         // Active slide and pause carousel
+         slide.classList.add("active");
+         enableManualMode(true);
+      }
    });
 }
 
