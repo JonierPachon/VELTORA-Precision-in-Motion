@@ -9,6 +9,8 @@
 
 :root {
    --accent-color: #ff5733;
+   --section1-bg: #111;
+   --section2-bg: #000;
    --hover: #e64a19;
    --ink-1: #ffffff;
    --ink-2: #e6e6e6;
@@ -136,7 +138,7 @@ header h1 {
 }
 
 .feature-section {
-   background: var(--field-bg);
+   background: var(--section1-bg);
    color: var(--ink-1);
    padding: 5rem 10rem;
    text-align: center;
@@ -243,7 +245,7 @@ header h1 {
 /* Gallery Section */
 
 .gallery-section {
-   background: var(--field-bg);
+   background: var(--section2-bg);
    color: var(--ink-1);
    padding: 5rem 7rem 6rem;
    text-align: center;
@@ -339,7 +341,7 @@ header h1 {
 .slider::after {
    background: linear-gradient(
       to right,
-      var(--field-bg) 0%,
+      var(--section2-bg) 0%,
       rgba(0, 0, 0, 0) 100%
    );
    content: "";
@@ -448,7 +450,7 @@ header h1 {
 /* Contact Section */
 
 .contact-section {
-   background: var(--field-bg);
+   background: var(--section1-bg);
    color: var(--ink-1);
    padding: 5rem 2rem;
    text-align: center;
@@ -648,7 +650,7 @@ textarea:-webkit-autofill {
 
 /* Footer Section */
 .site-footer {
-   background: var(--field-bg);
+   background: var(--section2-bg);
    color: #bbb;
    padding: 2rem 1rem;
    text-align: center;
