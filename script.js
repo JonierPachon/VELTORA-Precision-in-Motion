@@ -58,7 +58,7 @@ if (!prefersReduced && revealEls.length) {
          entries.forEach((entry) => {
             const el = entry.target;
 
-            // optional:stagger based on order in parent
+            // stagger animation based on order in parent container
             const siblings = Array.from(
                el.parentElement.querySelectorAll(".reveal")
             );
