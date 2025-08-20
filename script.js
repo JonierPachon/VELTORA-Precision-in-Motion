@@ -108,7 +108,7 @@ let uniqueCount = 0;
 const indicatorsContainer = document.querySelector(".slider-indicators");
 let indicatorDots = [];
 const MAX_INDICATOR_DOTS = 7;
-const MANUAL_PAUSE = MANUAL_PAUSE;
+const MANUAL_PAUSE = 3500;
 
 if (track) {
    const originals = Array.from(track.children);
@@ -312,7 +312,7 @@ if (slider) {
 
    const prevBtn = document.querySelector(".slider-prev");
    const nextBtn = document.querySelector(".slider-next");
-   prevBtn?.addEventListener("click", prev(MANUAL_PAUSE));
+   prevBtn?.addEventListener("click", () => prev(MANUAL_PAUSE));
    nextBtn?.addEventListener("click", () => next(false, MANUAL_PAUSE));
 
    // Allow Dragging with pointer or touch
@@ -380,10 +380,11 @@ if (slider) {
 document.addEventListener("click", (e) => {
    if (!slider?.classList.contains("is-manual")) return;
    if (e.target.closest(".slide img")) return;
-   slider.classList.remove("is-manual");
    track
       ?.querySelectorAll(".slide.active")
       .forEach((el) => el.classList.remove("active"));
+   // keep the carousel paused for the full manual timeout
+   enableManualMode(false, MANUAL_PAUSE);
 });
 
 updateStatus();
