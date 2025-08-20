@@ -217,9 +217,18 @@ function enableManualMode(persist = false) {
 }
 
 // Pause autoplay briefly on narrow screens
+let smallScreenInterval;
 function pauseForSmallScreens() {
+   if (!slider) return;
    if (window.innerWidth < 600) {
       enableManualMode(true);
+      if (!smallScreenInterval) {
+         smallScreenInterval = setInterval(() => next(true), 3500);
+      }
+   } else {
+      clearInterval(smallScreenInterval);
+      smallScreenInterval = null;
+      slider.classList.remove("is-manual");
    }
 }
 
@@ -227,10 +236,10 @@ window.addEventListener("load", pauseForSmallScreens);
 window.addEventListener("resize", pauseForSmallScreens);
 
 // Slide forward by moving the first slide to the end
-function next() {
+function next(auto = false) {
    if (!track || isAnimating) return;
    recalcWidth();
-   enableManualMode();
+   enableManualMode(auto);
    isAnimating = true;
    track.style.transition = "";
    track.style.transform = `translateX(-${SLIDE_WIDTH}px)`;
@@ -303,7 +312,7 @@ if (slider) {
    const prevBtn = document.querySelector(".slider-prev");
    const nextBtn = document.querySelector(".slider-next");
    prevBtn?.addEventListener("click", prev);
-   nextBtn?.addEventListener("click", next);
+   nextBtn?.addEventListener("click", () => next());
 
    // Allow Dragging with pointer or touch
    let startX = null;
