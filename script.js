@@ -216,6 +216,16 @@ function enableManualMode(persist = false) {
    }
 }
 
+// Pause autoplay briefly on narrow screens
+function pauseForSmallScreens() {
+   if (window.innerWidth < 600) {
+      enableManualMode(true);
+   }
+}
+
+window.addEventListener("load", pauseForSmallScreens);
+window.addEventListener("resize", pauseForSmallScreens);
+
 // Slide forward by moving the first slide to the end
 function next() {
    if (!track || isAnimating) return;
@@ -298,28 +308,10 @@ if (slider) {
    // Allow Dragging with pointer or touch
    let startX = null;
    let pressedSlide = null;
-   let didDrag = false;
    function onStart(x, slide) {
       startX = x;
       pressedSlide = slide;
       slider.classList.add("dragging");
-      enableManualMode();
-      didDrag = false;
-   }
-
-   function handleSlideClick(slide) {
-      const wasActive = slide.classList.contains("active");
-      track
-         .querySelectorAll(".slide.active")
-         .forEach((el) => el.classList.remove("active"));
-      if (wasActive) {
-         // Second Tap on the same slide: collapse and resume autoplay
-         slider.classList.remove("is-manual");
-      } else {
-         // Activate slide and pause carousel
-         slide.classList.add("active");
-         enableManualMode(true);
-      }
    }
 
    function onEnd(x, y) {
@@ -328,14 +320,6 @@ if (slider) {
       slider.classList.remove("dragging");
       if (Math.abs(dx) > 30) {
          dx < 0 ? next() : prev();
-         didDrag = true;
-      } else {
-         const el =
-            document.elementFromPoint(x, y)?.closest(".slide") || pressedSlide;
-         if (el) {
-            handleSlideClick(el);
-            didDrag = true; // ignore the follow-up click event
-         }
       }
       startX = null;
       pressedSlide = null;
@@ -381,18 +365,6 @@ if (slider) {
          slider.classList.remove("dragging");
       });
    }
-
-   track.addEventListener("click", (e) => {
-      if (didDrag) {
-         didDrag = false;
-         return;
-      }
-
-      const slide = e.target.closest(".slide");
-      if (!slide) return;
-      e.stopPropagation();
-      handleSlideClick(slide);
-   });
 }
 
 document.addEventListener("click", (e) => {
