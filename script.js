@@ -200,7 +200,7 @@ if (track) requestAnimationFrame(autoSyncIndicators);
 
 //Switches to manual mode if user focuses slider or prefers-reduced-motion
 let resumeTimer;
-function enableManualMode(persist = false) {
+function enableManualMode(persist = false, delay = 2000) {
    if (!slider || !track) return;
    // Pause the auto autoplay loop
    slider.classList.add("is-manual");
@@ -212,7 +212,7 @@ function enableManualMode(persist = false) {
    if (!persist) {
       resumeTimer = setTimeout(() => {
          slider.classList.remove("is-manual");
-      }, 2000);
+      }, delay);
    }
 }
 
@@ -236,10 +236,10 @@ window.addEventListener("load", pauseForSmallScreens);
 window.addEventListener("resize", pauseForSmallScreens);
 
 // Slide forward by moving the first slide to the end
-function next(auto = false) {
+function next(auto = false, delay = 2000) {
    if (!track || isAnimating) return;
    recalcWidth();
-   enableManualMode(auto);
+   enableManualMode(auto, delay);
    isAnimating = true;
    track.style.transition = "";
    track.style.transform = `translateX(-${SLIDE_WIDTH}px)`;
@@ -267,10 +267,10 @@ function next(auto = false) {
 
 // Slide backward by moving the last slide to the front
 
-function prev() {
+function prev(delay = 2000) {
    if (!track || isAnimating) return;
    recalcWidth();
-   enableManualMode();
+   enableManualMode(false, delay);
    isAnimating = true;
    track.style.transition = "none";
    track.insertBefore(track.lastElementChild, track.firstElementChild);
@@ -328,7 +328,7 @@ if (slider) {
       const dx = x - startX;
       slider.classList.remove("dragging");
       if (Math.abs(dx) > 30) {
-         dx < 0 ? next() : prev();
+         dx < 0 ? next(false, 3000) : prev(3000);
       }
       startX = null;
       pressedSlide = null;
