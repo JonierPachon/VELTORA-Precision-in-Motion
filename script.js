@@ -108,6 +108,7 @@ let uniqueCount = 0;
 const indicatorsContainer = document.querySelector(".slider-indicators");
 let indicatorDots = [];
 const MAX_INDICATOR_DOTS = 7;
+const MANUAL_PAUSE = MANUAL_PAUSE;
 
 if (track) {
    const originals = Array.from(track.children);
@@ -200,7 +201,7 @@ if (track) requestAnimationFrame(autoSyncIndicators);
 
 //Switches to manual mode if user focuses slider or prefers-reduced-motion
 let resumeTimer;
-function enableManualMode(persist = false, delay = 2000) {
+function enableManualMode(persist = false, delay = MANUAL_PAUSE) {
    if (!slider || !track) return;
    // Pause the auto autoplay loop
    slider.classList.add("is-manual");
@@ -223,7 +224,7 @@ function pauseForSmallScreens() {
    if (window.innerWidth < 600) {
       enableManualMode(true);
       if (!smallScreenInterval) {
-         smallScreenInterval = setInterval(() => next(true), 3500);
+         smallScreenInterval = setInterval(() => next(true), MANUAL_PAUSE);
       }
    } else {
       clearInterval(smallScreenInterval);
@@ -236,7 +237,7 @@ window.addEventListener("load", pauseForSmallScreens);
 window.addEventListener("resize", pauseForSmallScreens);
 
 // Slide forward by moving the first slide to the end
-function next(auto = false, delay = 2000) {
+function next(auto = false, delay = MANUAL_PAUSE) {
    if (!track || isAnimating) return;
    recalcWidth();
    enableManualMode(auto, delay);
@@ -267,7 +268,7 @@ function next(auto = false, delay = 2000) {
 
 // Slide backward by moving the last slide to the front
 
-function prev(delay = 2000) {
+function prev(delay = MANUAL_PAUSE) {
    if (!track || isAnimating) return;
    recalcWidth();
    enableManualMode(false, delay);
@@ -299,11 +300,11 @@ if (slider) {
    slider.addEventListener("keydown", (e) => {
       if (e.key === "ArrowRight") {
          e.preventDefault();
-         next();
+         next(false, MANUAL_PAUSE);
       }
       if (e.key === "ArrowLeft") {
          e.preventDefault();
-         prev();
+         prev(MANUAL_PAUSE);
       }
    });
 
@@ -311,8 +312,8 @@ if (slider) {
 
    const prevBtn = document.querySelector(".slider-prev");
    const nextBtn = document.querySelector(".slider-next");
-   prevBtn?.addEventListener("click", prev);
-   nextBtn?.addEventListener("click", () => next());
+   prevBtn?.addEventListener("click", prev(MANUAL_PAUSE));
+   nextBtn?.addEventListener("click", () => next(false, MANUAL_PAUSE));
 
    // Allow Dragging with pointer or touch
    let startX = null;
@@ -328,7 +329,7 @@ if (slider) {
       const dx = x - startX;
       slider.classList.remove("dragging");
       if (Math.abs(dx) > 30) {
-         dx < 0 ? next(false, 3000) : prev(3000);
+         dx < 0 ? next(false, MANUAL_PAUSE) : prev(MANUAL_PAUSE);
       }
       startX = null;
       pressedSlide = null;
