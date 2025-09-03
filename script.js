@@ -131,6 +131,8 @@ if (indicatorsContainer && uniqueCount) {
 let index = 0;
 let SLIDE_WIDTH = 250;
 let isAnimating = false;
+// Track queued slide requests while a transition is running
+let queuedDir = 0; // positive → next, negative → prev
 
 function recalcWidth() {
    const slide = track?.querySelector(".slide");
@@ -199,9 +201,14 @@ function autoSyncIndicators() {
 
 if (track) requestAnimationFrame(autoSyncIndicators);
 
-//Switches to manual mode if user focuses slider or prefers-reduced-motion
+// Switches to manual mode if user focuses slider or prefers-reduced-motion
 let resumeTimer;
-function enableManualMode(persist = false, delay = MANUAL_PAUSE) {
+let pauseSeq = 0;
+function enableManualMode(
+   persist = false,
+   delay = MANUAL_PAUSE,
+   seq = pauseSeq
+) {
    if (!slider || !track) return;
    // Pause the auto autoplay loop
    slider.classList.add("is-manual");
@@ -211,8 +218,11 @@ function enableManualMode(persist = false, delay = MANUAL_PAUSE) {
    void track.offsetWidth; // force reflow to cancel the CSS keyframe animation
    clearTimeout(resumeTimer);
    if (!persist) {
+      const currentSeq = seq;
       resumeTimer = setTimeout(() => {
-         slider.classList.remove("is-manual");
+         if (currentSeq === pauseSeq) {
+            slider.classList.remove("is-manual");
+         }
       }, delay);
    }
 }
@@ -221,7 +231,7 @@ function enableManualMode(persist = false, delay = MANUAL_PAUSE) {
 let smallScreenInterval;
 function pauseForSmallScreens() {
    if (!slider) return;
-   if (window.innerWidth < 600) {
+   if (window.innerWidth < 700) {
       enableManualMode(true);
       if (!smallScreenInterval) {
          smallScreenInterval = setInterval(() => next(true), MANUAL_PAUSE);
@@ -238,9 +248,16 @@ window.addEventListener("resize", pauseForSmallScreens);
 
 // Slide forward by moving the first slide to the end
 function next(auto = false, delay = MANUAL_PAUSE) {
-   if (!track || isAnimating) return;
+   // Pause autoplay immediately and cancel any pending resume
+   enableManualMode(true);
+   if (!track) return;
+   if (isAnimating) {
+      // Remember this request so it runs after the current slide finishes
+      queuedDir++;
+      return;
+   }
+   const seq = ++pauseSeq;
    recalcWidth();
-   enableManualMode(auto, delay);
    isAnimating = true;
    track.style.transition = "";
    track.style.transform = `translateX(-${SLIDE_WIDTH}px)`;
@@ -255,6 +272,16 @@ function next(auto = false, delay = MANUAL_PAUSE) {
          void track.offsetWidth;
          track.style.transition = "";
          isAnimating = false;
+         // Start or maintain the pause after the slide finishes
+         enableManualMode(auto, delay, seq);
+         // If user queued another navigation, process it now
+         if (queuedDir > 0) {
+            queuedDir--;
+            next(auto, delay);
+         } else if (queuedDir < 0) {
+            queuedDir++;
+            prev(delay);
+         }
       },
       {
          once: true,
@@ -269,9 +296,16 @@ function next(auto = false, delay = MANUAL_PAUSE) {
 // Slide backward by moving the last slide to the front
 
 function prev(delay = MANUAL_PAUSE) {
-   if (!track || isAnimating) return;
+   // Pause autoplay immediately and cancel any pending resume
+   enableManualMode(true);
+   if (!track) return;
+   if (isAnimating) {
+      // Remember this request so it runs after the current slide finishes
+      queuedDir--;
+      return;
+   }
+   const seq = ++pauseSeq;
    recalcWidth();
-   enableManualMode(false, delay);
    isAnimating = true;
    track.style.transition = "none";
    track.insertBefore(track.lastElementChild, track.firstElementChild);
@@ -284,6 +318,16 @@ function prev(delay = MANUAL_PAUSE) {
       "transitionend",
       () => {
          isAnimating = false;
+         // Begin pause countdown after the slide completes
+         enableManualMode(false, delay, seq);
+         // Handle any queued navigation requests
+         if (queuedDir > 0) {
+            queuedDir--;
+            next(false, delay);
+         } else if (queuedDir < 0) {
+            queuedDir++;
+            prev(delay);
+         }
       },
       { once: true }
    );

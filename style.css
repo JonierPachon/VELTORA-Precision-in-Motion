@@ -293,9 +293,9 @@ header h1 {
    animation: scroll 58s linear infinite;
 }
 
-.slide-track:hover {
+/* .slide-track:hover {
    animation-play-state: paused;
-}
+} */
 
 @keyframes scroll {
    0% {
@@ -318,10 +318,10 @@ header h1 {
    position: relative;
 }
 
-.slide:hover,
+/* .slide:hover,
 .slide.active {
    z-index: 3;
-}
+} */
 .slide img {
    width: auto;
    transition: transform 0.3 ease;
@@ -331,10 +331,10 @@ header h1 {
    z-index: 0;
 }
 
-.slide img:hover,
+/* .slide img:hover,
 .slide.active img {
    transform: scale(1.3);
-}
+} */
 
 .slider::before,
 .slider::after {
