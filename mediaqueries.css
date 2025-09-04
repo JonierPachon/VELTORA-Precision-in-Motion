@@ -17,15 +17,11 @@
    }
 }
 
-@media (max-width: 1000px) {
+/* @media (max-width: 1000px) {
    .slider-btn {
       display: none;
    }
-
-   /* .slider-indicators {
-      display: flex;
-   } */
-}
+} */
 
 @media (max-width: 940px) {
    .feature-section {
@@ -118,6 +114,9 @@
 }
 
 @media (max-width: 700px) {
+   .slide-btn {
+      display: none;
+   }
    .gallery-section {
       padding: 5rem 2rem;
    }
