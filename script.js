@@ -10,26 +10,22 @@ const prefersReduced = window.matchMedia(
    "(prefers-reduced-motion: reduce)"
 ).matches;
 
-// 2) Typing effect
+// 2) Luxury text reveal
 const typingEl = document.querySelector("#typing-text");
 if (typingEl) {
    const text =
       "Experience the thrill of VELTORA. Built for those who demand more.";
 
+   // Always set the full text immediately
+   typingEl.textContent = text;
+
    if (prefersReduced) {
-      // No animation — show text right away
-      typingEl.textContent = text;
+      // Respect reduced motion: show text without animation
+      typingEl.style.opacity = 1;
+      typingEl.style.transform = "none";
    } else {
-      // Show text letter by letter
-      let i = 0;
-      function typeNext() {
-         if (i < text.length) {
-            typingEl.textContent += text[i];
-            i++;
-            setTimeout(typeNext, 45); // wait 45ms before next letter
-         }
-      }
-      typeNext();
+      /// Trigger smooth slide-up animation
+      requestAnimationFrame(() => typingEl.classList.add("slide-visible"));
    }
 }
 
