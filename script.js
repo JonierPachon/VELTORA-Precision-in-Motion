@@ -103,6 +103,87 @@ if (!prefersReduced && revealEls.length) {
 // --- Slider keyboard controls ---
 const slider = document.querySelector(".slider");
 const track = document.querySelector(".slide-track");
+const slidesData = [
+   {
+      src: "./assets/side view of super car.png",
+      alt: "Side view of super car",
+   },
+   { src: "./assets/interior of super car.png", alt: "interior of super car" },
+   {
+      src: "./assets/side view of super car 5.png",
+      alt: "rear view of super car",
+   },
+   { src: "./assets/super car in motion.png", alt: "super car in motion" },
+   {
+      src: "./assets/rear view of super car 3.png",
+      alt: "Side view of super car",
+   },
+   {
+      src: "./assets/side view of super car 7.png",
+      alt: "Side view of super car",
+   },
+   {
+      src: "./assets/3D renders of super car.png",
+      alt: "Side view of super car",
+   },
+   { src: "./assets/side view of super car 4.png", alt: "super car in motion" },
+   {
+      src: "./assets/rear view of super car.png",
+      alt: "rear view of super car",
+   },
+   {
+      src: "./assets/front view of a supercar.png",
+      alt: "rear view of super car",
+   },
+   { src: "./assets/side view of super car 8.png", alt: "super car in motion" },
+   { src: "./assets/interior of super car 2.png", alt: "super car in motion" },
+   {
+      src: "./assets/engineering sketches of super car.png",
+      alt: "interior of super car",
+   },
+   {
+      src: "./assets/interior of super car 4.png",
+      alt: "interior of super car",
+   },
+   { src: "./assets/super car in motion 2.png", alt: "super car in motion" },
+   {
+      src: "./assets/interior of super car 3.png",
+      alt: "Side view of super car",
+   },
+   {
+      src: "./assets/side view of super car 3.png",
+      alt: "rear view of super car",
+   },
+   {
+      src: "./assets/opening the door of super car.png",
+      alt: "rear view of super car",
+   },
+   { src: "./assets/rear view of super car 2.png", alt: "super car in motion" },
+   { src: "./assets/side view of super car 6.png", alt: "super car in motion" },
+   {
+      src: "./assets/side view of super car 2.png",
+      alt: "interior of super car",
+   },
+   { src: "./assets/super car in motion 3.png", alt: "super car in motion" },
+];
+
+if (track) {
+   // Build slides using a fragment to avoid repeated DOM reflows
+   const fragment = document.createDocumentFragment();
+   slidesData.forEach(({ src, alt }) => {
+      const slide = document.createElement("div");
+      slide.className = "slide";
+      const img = document.createElement("img");
+      // Resolve paths relative to the document and let the browser handle encoding
+      img.src = new URL(src, document.baseURI).href;
+      img.alt = alt;
+      img.loading = "lazy";
+      img.decoding = "async";
+      slide.appendChild(img);
+      fragment.appendChild(slide);
+   });
+   track.appendChild(fragment);
+}
 let slides = [];
 let uniqueCount = 0;
 const indicatorsContainer = document.querySelector(".slider-indicators");
@@ -113,7 +194,9 @@ const MANUAL_PAUSE = 3500;
 if (track) {
    const originals = Array.from(track.children);
    uniqueCount = originals.length;
-   originals.forEach((slide) => track.appendChild(slide.cloneNode(true)));
+   const clones = document.createDocumentFragment();
+   originals.forEach((slide) => clones.appendChild(slide.cloneNode(true)));
+   track.appendChild(clones);
    slides = Array.from(track.children);
    track.style.setProperty("--slide-count", slides.length);
    track.style.setProperty("--half-count", uniqueCount);
@@ -131,9 +214,8 @@ if (indicatorsContainer && uniqueCount) {
 let index = 0;
 let SLIDE_WIDTH = 250;
 let isAnimating = false;
-// Track queued slide requests while a transition is running
-let queuedDir = 0; // positive → next, negative → prev
-
+let transitionHandler = null;
+let lastNavTime = 0;
 function recalcWidth() {
    const slide = track?.querySelector(".slide");
    if (slide && track) {
@@ -189,7 +271,10 @@ function autoSyncIndicators() {
       const matrix = new DOMMatrixReadOnly(transform);
       const offset = -matrix.m41; // current translation (positive as we scroll left)
       const total = uniqueCount || slides.length;
-      const newIndex = total ? Math.round(offset / SLIDE_WIDTH) % total : 0;
+      // Determine which slide is currently at the start of the track
+      const base = total ? slides.indexOf(track.firstElementChild) % total : 0;
+      const moved = Math.round(offset / SLIDE_WIDTH);
+      const newIndex = (base + moved + total) % total;
       if (newIndex !== index) {
          index = newIndex;
          updateStatus();
@@ -246,47 +331,111 @@ function pauseForSmallScreens() {
 window.addEventListener("load", pauseForSmallScreens);
 window.addEventListener("resize", pauseForSmallScreens);
 
+// Stop any in-progress transition and freeze the track in place
+function cancelAnimation() {
+   if (!isAnimating || !track) return;
+   if (transitionHandler) {
+      track.removeEventListener("transitionend", transitionHandler);
+      transitionHandler = null;
+   }
+   const transform = getComputedStyle(track).transform;
+   track.style.transition = "none";
+   track.style.transform = transform;
+   void track.offsetWidth; // force reflow
+   isAnimating = false;
+}
+
+function finishTransition() {
+   if (isAnimating && transitionHandler) {
+      transitionHandler();
+   }
+}
+
+// Ensure the track is aligned to the currently visible slide
+function snapToCurrentSlide(transformOverride = null) {
+   if (!track) return;
+   // Cancel current motion and recalc widths so offset math stays accurate
+   cancelAnimation();
+   recalcWidth();
+   const transform = transformOverride ?? getComputedStyle(track).transform;
+   if (!transform || transform === "none") return;
+   const matrix = new DOMMatrixReadOnly(transform);
+   const offset = -matrix.m41; // positive value as we scroll left
+   // Determine how many whole slides we've already advanced past.
+   // A small epsilon compensates for sub-pixel rounding so nearly
+   // complete transitions are treated as full slides.
+   const fraction = offset / SLIDE_WIDTH;
+   const EPS = 0.01;
+   const shift =
+      offset >= 0 ? Math.floor(fraction + EPS) : Math.ceil(fraction - EPS);
+   if (shift !== 0) {
+      if (shift > 0) {
+         for (let i = 0; i < shift; i++) {
+            track.appendChild(track.firstElementChild);
+         }
+      } else {
+         for (let i = 0; i > shift; i--) {
+            track.insertBefore(track.lastElementChild, track.firstElementChild);
+         }
+      }
+   }
+
+   // After moving slides, set the logical index to match the first slide
+   const total = uniqueCount || slides.length;
+   if (total) {
+      index = slides.indexOf(track.firstElementChild) % total;
+   }
+
+   // Snap transform back to the start of the now-visible slide
+   track.style.transition = "none";
+   track.style.transform = "translateX(0)";
+   // Force reflow to make sure the browser acknowledges the change
+   void track.offsetWidth;
+   track.style.transition = "";
+   updateStatus();
+}
+
 // Slide forward by moving the first slide to the end
 function next(auto = false, delay = MANUAL_PAUSE) {
+   if (!track) return;
+   finishTransition();
+   // Capture the current transform before pausing autoplay so we don't lose
+   // where the carousel actually is.
+   const transform = getComputedStyle(track).transform;
    // Pause autoplay immediately and cancel any pending resume
    enableManualMode(true);
-   if (!track) return;
-   if (isAnimating) {
-      // Remember this request so it runs after the current slide finishes
-      queuedDir++;
-      return;
-   }
+   // Restore the captured transform after disabling the CSS animation
+   track.style.transform = transform;
+   snapToCurrentSlide(transform);
+
    const seq = ++pauseSeq;
    recalcWidth();
+   const now = Date.now();
+   const fast = now - lastNavTime < 200;
+   lastNavTime = now;
+   if (fast) {
+      track.style.transitionDuration = "150ms";
+   } else {
+      track.style.removeProperty("transition-duration");
+   }
    isAnimating = true;
    track.style.transition = "";
    track.style.transform = `translateX(-${SLIDE_WIDTH}px)`;
-   track.addEventListener(
-      "transitionend",
-      function handler() {
-         track.removeEventListener("transitionend", handler);
-         track.style.transition = "none";
-         track.appendChild(track.firstElementChild);
-         track.style.transform = "translateX(0)";
-         // Force reflow so the browser acknowledges the style change
-         void track.offsetWidth;
-         track.style.transition = "";
-         isAnimating = false;
-         // Start or maintain the pause after the slide finishes
-         enableManualMode(auto, delay, seq);
-         // If user queued another navigation, process it now
-         if (queuedDir > 0) {
-            queuedDir--;
-            next(auto, delay);
-         } else if (queuedDir < 0) {
-            queuedDir++;
-            prev(delay);
-         }
-      },
-      {
-         once: true,
-      }
-   );
+   transitionHandler = function () {
+      track.removeEventListener("transitionend", transitionHandler);
+      transitionHandler = null;
+      track.style.transition = "none";
+      track.appendChild(track.firstElementChild);
+      track.style.transform = "translateX(0)";
+      // Force reflow so the browser acknowledges the style change
+      void track.offsetWidth;
+      track.style.transition = "";
+      track.style.removeProperty("transition-duration");
+      isAnimating = false;
+      // Start or maintain the pause after the slide finishes
+      enableManualMode(auto, delay, seq);
+   };
+   track.addEventListener("transitionend", transitionHandler);
 
    const total = uniqueCount || slides.length;
    index = (index + 1) % total;
@@ -296,16 +445,26 @@ function next(auto = false, delay = MANUAL_PAUSE) {
 // Slide backward by moving the last slide to the front
 
 function prev(delay = MANUAL_PAUSE) {
+   if (!track) return;
+   finishTransition();
+   // Capture the current transform before pausing autoplay so we don't lose
+   // track of the active slide.
+   const transform = getComputedStyle(track).transform;
    // Pause autoplay immediately and cancel any pending resume
    enableManualMode(true);
-   if (!track) return;
-   if (isAnimating) {
-      // Remember this request so it runs after the current slide finishes
-      queuedDir--;
-      return;
-   }
+   // Restore the captured transform after disabling the CSS animation
+   track.style.transform = transform;
+   snapToCurrentSlide(transform);
    const seq = ++pauseSeq;
    recalcWidth();
+   const now = Date.now();
+   const fast = now - lastNavTime < 200;
+   lastNavTime = now;
+   if (fast) {
+      track.style.transitionDuration = "150ms";
+   } else {
+      track.style.removeProperty("transition-duration");
+   }
    isAnimating = true;
    track.style.transition = "none";
    track.insertBefore(track.lastElementChild, track.firstElementChild);
@@ -314,23 +473,15 @@ function prev(delay = MANUAL_PAUSE) {
    void track.offsetWidth;
    track.style.transition = "";
    track.style.transform = "translateX(0)";
-   track.addEventListener(
-      "transitionend",
-      () => {
-         isAnimating = false;
-         // Begin pause countdown after the slide completes
-         enableManualMode(false, delay, seq);
-         // Handle any queued navigation requests
-         if (queuedDir > 0) {
-            queuedDir--;
-            next(false, delay);
-         } else if (queuedDir < 0) {
-            queuedDir++;
-            prev(delay);
-         }
-      },
-      { once: true }
-   );
+   transitionHandler = function () {
+      track.removeEventListener("transitionend", transitionHandler);
+      transitionHandler = null;
+      track.style.removeProperty("transition-duration");
+      isAnimating = false;
+      // Begin pause countdown after the slide completes
+      enableManualMode(false, delay, seq);
+   };
+   track.addEventListener("transitionend", transitionHandler);
 
    const total = uniqueCount || slides.length;
    index = (index - 1 + total) % total;
@@ -342,6 +493,7 @@ if (slider) {
    slider.addEventListener("focus", enableManualMode);
 
    slider.addEventListener("keydown", (e) => {
+      // if (e.repeat || isAnimating) return;
       if (e.key === "ArrowRight") {
          e.preventDefault();
          next(false, MANUAL_PAUSE);
