@@ -6,16 +6,16 @@ A sleek, responsive landing page crafted with HTML, CSS, and JavaScript, inspire
 
 # 📸 Screenshots
 <p align="center">
-    <img src="https://github.com/JonierPachon/VELTORA-Precision-in-Motion/blob/main/assets/README/pc.png" alt="My Image 1" width="680" style="margin: 0 10px;">
-    <img src="https://github.com/JonierPachon/VELTORA-Precision-in-Motion/blob/main/assets/README/phone.png" alt="My Image 2" width="180" style="margin: 0 200px;">
+    <img src="https://github.com/JonierPachon/VELTORA-Precision-in-Motion/blob/main/assets/README/PC1.png" alt="My Image 1" width="680" style="margin: 0 10px;">
+    <img src="https://github.com/JonierPachon/VELTORA-Precision-in-Motion/blob/main/assets/README/phone1.png" alt="My Image 2" width="180" style="margin: 0 200px;">
 </p>
 <p align="center">
-    <img src="https://github.com/JonierPachon/VELTORA-Precision-in-Motion/blob/main/assets/README/pc%202.png" alt="My Image 1" width="680" style="margin: 0 10px;">
-    <img src="https://github.com/JonierPachon/VELTORA-Precision-in-Motion/blob/main/assets/README/phone%202.1.png" alt="My Image 2" width="180" style="margin: 0 200px;">
+    <img src="https://github.com/JonierPachon/VELTORA-Precision-in-Motion/blob/main/assets/README/PC3.png" alt="My Image 1" width="680" style="margin: 0 10px;">
+    <img src="https://github.com/JonierPachon/VELTORA-Precision-in-Motion/blob/main/assets/README/phone3.png" alt="My Image 2" width="180" style="margin: 0 200px;">
 </p>
 <p align="center">
-    <img src="https://github.com/JonierPachon/VELTORA-Precision-in-Motion/blob/main/assets/README/pc%203.png" alt="My Image 1" width="680" style="margin: 0 10px;">
-    <img src="https://github.com/JonierPachon/VELTORA-Precision-in-Motion/blob/main/assets/README/phone%203.1.png" alt="My Image 2" width="180" style="margin: 0 200px;">
+    <img src="https://github.com/JonierPachon/VELTORA-Precision-in-Motion/blob/main/assets/README/PC4.png" alt="My Image 1" width="680" style="margin: 0 10px;">
+    <img src="https://github.com/JonierPachon/VELTORA-Precision-in-Motion/blob/main/assets/README/phone4.png" alt="My Image 2" width="180" style="margin: 0 200px;">
 </p>
 
 # ✨ Features
